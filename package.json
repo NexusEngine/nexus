@@ -1,0 +1,21 @@
+{
+  "name": "@nexus-engine/nexus",
+  "private": true,
+  "description": "Nexus Engine",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "clean": "npm run clean",
+    "build": "npm run build",
+    "pub": "npm publish",
+    "test": "npm run"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.3",
+    "@types/node": "^16.11.10"
+  },
+  "engines": {
+    "npm": ">=7"
+  }
+}

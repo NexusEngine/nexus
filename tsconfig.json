@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.build.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@nexus-engine/*": [
+        "packages/*/src/"
+      ]
+    },
+    "noEmit": true
+  }
+}

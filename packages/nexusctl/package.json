@@ -1,0 +1,32 @@
+{
+  "name": "nexusctl",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "nexusctl": "./bin/entry.js"
+  },
+  "author": "Art of Coding <support@artofcoding.nl> (https://artofcoding.nl)",
+  "contributors": [
+    "Michiel van der Velde <michiel@michielvdvelde.nl> (https://michielvdvelde.nl)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nexus-Engine/nexus.git",
+    "directory": "packages/cli"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rimraf -rf ./dist",
+    "compile": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "npm run build",
+    "test": "npm run build"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "devDependencies": {
+    "rimraf": "~3.0.2"
+  },
+  "dependencies": {
+    "@nexus-engine/engine": "*"
+  }
+}
