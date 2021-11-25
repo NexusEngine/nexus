@@ -1,1 +1,1 @@
-export const meaningOfLife = 42
+// this is the entrypoint
