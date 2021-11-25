@@ -8,14 +8,16 @@
   "scripts": {
     "clean": "npm run clean",
     "build": "npm run build",
-    "pub": "npm publish",
-    "test": "npm run"
+    "pub": "npm publish"
   },
   "devDependencies": {
     "@types/jest": "^27.0.3",
-    "@types/node": "^16.11.10"
+    "@types/node": "^16.11.10",
+    "jest": "^27.3.1",
+    "ts-jest": "^27.0.7"
   },
   "engines": {
-    "npm": ">=7"
+    "npm": ">=7",
+    "node": ">=16"
   }
 }
