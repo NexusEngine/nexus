@@ -12,9 +12,11 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Nexus-Engine/nexus.git",
-    "directory": "packages/cli"
+    "directory": "packages/nexusctl"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "npm run clean && npm run compile",
     "clean": "rimraf -rf ./dist",
@@ -27,6 +29,7 @@
     "rimraf": "~3.0.2"
   },
   "dependencies": {
-    "@nexus-engine/engine": "*"
+    "commander": "^8.3.0",
+    "inquirer": "^8.2.0"
   }
 }
