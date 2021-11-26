@@ -10,7 +10,7 @@ are subject to negotiations.
 
 Second, at your option, your use of this Software – either commercial,
 non-commercial, or both – may be subject to the GNU General Public License in
-such version as included in the “gpl-3.0.txt” file, available in the main
+such version as included in the “GPL-V3.md” file, available in the main
 directory of this software repository.
 
 ART OF CODING PROVIDES THIS SOFTWARE ON AN “AS IS” BASIS, WITHOUT WARRANTIES OR
