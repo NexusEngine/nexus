@@ -1,3 +1,5 @@
+import { Service } from './spawn.js'
+import type { Options } from './commands/start'
 import { Command } from 'commander'
 
 const program = new Command
@@ -16,7 +18,7 @@ program
 program
   .command('start [service]')
   .description('start the service')
-  .action(async (service = 'launcher', options) => {
+  .action(async (service: Service = 'launcher', options: Options) => {
     await (await import('./commands/start.js')).default(service, options)
   })
 

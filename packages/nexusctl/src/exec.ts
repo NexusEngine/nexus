@@ -6,8 +6,8 @@ import { exec, spawn } from 'child_process'
  */
 export async function getDistTags(): Promise<string[][]> {
   return new Promise<string[][]>((resolve, reject) => {
-    exec(`npm dist-tags @ageira/base-rate-calculator`, (err, result) => {
-      return err ? reject(err) : resolve(result.split('\r').map(line => line.trim().split(': ')))
+    exec('npm dist-tags @ageira/base-rate-calculator', (err, result) => {
+      return err ? reject(err) : resolve(result.split('\n').map(line => line.trim().split(': ')))
     })
   })
 }

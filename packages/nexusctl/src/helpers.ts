@@ -3,7 +3,8 @@ import { existsSync } from 'fs'
 import Inquirer from 'inquirer'
 
 /**
- * Check if there exists a `package.json` in the given directory.
+ * Check if there exists a `package.json` in the given directory
+ * and if so, ask the user if they want to overwrite it.
  * @param dir The directory (default `process.cwd()`)
  * @returns `true` if the user wants to continue, `undefined` if no file exists
  */
