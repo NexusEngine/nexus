@@ -15,10 +15,10 @@ Contributions are always welcome!
    separate commit)
 7. Add your name and info to the `contributors` array in the appropriate
    `package.json`s (if you have not done so before)
-8. Include the following sentence in your commit (if you have not done so
-   before): "**I have read the CLA Document and I hereby sign the CLA**"
-9. Create a pull request - make sure to mention the issues your pull request
-   fixes, if any
+8. Create a pull request - make sure to mention the issues your pull request
+9. Include the following sentence in your pull request (if you have not done so
+   before): "**I have read the CLA Document and I hereby sign the CLA**" fixes,
+   if any
 10. ???
 
 Each pull request should contain a single bug fix or feature.
