@@ -6,9 +6,15 @@ config:
   - packages/config/*
   - packages/config/**/*
 
-nexusctl:
+cli:
   - packages/nexusctl/*
   - packages/nexusctl/**/*
 
 test:
-  - packages/**/__test__/*.ts
+  - packages/**/__tests__/*.ts
+
+build:
+  - tsconfig.json
+  - tsconfig.build.json
+  - packages/**/tsconfig.json
+  - packages/**/tsconfig.build.json
