@@ -1,6 +1,7 @@
 # Project-specific
 dist
 .env
+packages/**/.coverage
 .engine.yaml
 
 # Logs
