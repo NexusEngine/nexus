@@ -137,7 +137,7 @@ export default async function () {
 
     if (!existsSync('./.gitignore')) {
       console.log('\nWriting .gitignore...')
-      writeFileSync('.gitignore', 'node_modules\ndist')
+      writeFileSync('.gitignore', 'node_modules\ndist\.engine.yaml')
     }
   }
 
