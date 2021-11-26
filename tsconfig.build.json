@@ -6,6 +6,7 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "esModuleInterop": true,
+    "isolatedModules": true,
     "noImplicitAny": true,
     "declaration": true,
     "sourceMap": true,
