@@ -18,3 +18,7 @@ build:
   - tsconfig.build.json
   - packages/**/tsconfig.json
   - packages/**/tsconfig.build.json
+
+manifest:
+  - package.json
+  - packages/**/package.json
