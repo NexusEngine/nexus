@@ -13,11 +13,13 @@ Contributions are always welcome!
    pass! (this should be done in a separate commit)
 6. Write documentation for your changes, if applicable (this should be done in a
    separate commit)
-7. Include the following sentence in your commit (if you have not done so
+7. Add your name and info to the `contributors` array in the appropriate
+   `package.json`s (if you have not done so before)
+8. Include the following sentence in your commit (if you have not done so
    before): "**I have read the CLA Document and I hereby sign the CLA**"
-8. Create a pull request - make sure to mention the issues your pull request
+9. Create a pull request - make sure to mention the issues your pull request
    fixes, if any
-9. ???
+10. ???
 
 Each pull request should contain a single bug fix or feature.
 
@@ -27,6 +29,8 @@ Each pull request should contain a single bug fix or feature.
 - A feature which increments the minor version: `feature/{descriptive-name}`
 - A change which increments the major version: `breaking/{descriptive-name}`
 - A change to the documentation only: `documentation/{descriptive-name}`
+
+## Version Policy
 
 The patch version is incremented if:
 

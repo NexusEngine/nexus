@@ -1,7 +1,7 @@
 # Project-specific
 dist
 .env
-tsconfig.buildinfo
+.engine.yaml
 
 # Logs
 logs

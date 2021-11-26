@@ -2,7 +2,7 @@
   "name": "@nexus-engine/config",
   "version": "0.1.0",
   "type": "module",
-  "main": "./dist/config.js",
+  "main": "./dist/index.js",
   "author": "Art of Coding <support@artofcoding.nl> (https://artofcoding.nl)",
   "contributors": [
     "Michiel van der Velde <michiel@michielvdvelde.nl> (https://michielvdvelde.nl)"
@@ -24,6 +24,10 @@
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "devDependencies": {
+    "@types/js-yaml": "^4.0.5",
     "rimraf": "~3.0.2"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
   }
 }
