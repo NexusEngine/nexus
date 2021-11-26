@@ -1,0 +1,11 @@
+env:
+  node: true
+  browser: false
+  es2021: true
+extends:
+  - standard-with-typescript
+parserOptions:
+  ecmaVersion: 13
+  sourceType: module
+  project: tsconfig.build.json
+rules: {}
