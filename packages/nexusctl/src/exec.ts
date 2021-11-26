@@ -1,4 +1,4 @@
-import { exec } from 'child_process'
+import { exec, spawn } from 'child_process'
 
 /**
  * Get all dist-tags and their versions.
@@ -17,7 +17,7 @@ export async function getDistTags(): Promise<string[][]> {
  */
 export async function install() {
   return new Promise<void>(resolve => {
-    const child = exec('npm install')
+    const child = spawn('npm', ['install'], { shell: true })
     child.stdout!.pipe(process.stdout, { end: false })
     child.stderr!.pipe(process.stderr, { end: false })
     child.stdout!.once('close', resolve)
@@ -29,7 +29,7 @@ export async function install() {
  */
 export async function initializeGit() {
   return new Promise<void>(resolve => {
-    const child = exec('git init -b main')
+    const child = spawn('git', ['init', '-b', 'main'])
     child.stdout!.pipe(process.stdout, { end: false })
     child.stderr!.pipe(process.stderr, { end: false })
     child.stdout!.once('close', resolve)

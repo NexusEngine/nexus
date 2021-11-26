@@ -1,12 +1,16 @@
+import type { PackageJson } from 'type-fest'
 import { parse } from 'path'
+import { writeFileSync, existsSync } from 'fs'
 import Inquirer from 'inquirer'
-import { getDistTags } from '../exec.js'
+import { getDistTags, initializeGit, install } from '../exec.js'
 import { checkPackage } from '../helpers.js'
 
 interface ProjectAnswers {
   name: string,
   version: string,
   description: string,
+  keywords: string,
+  repository: string,
 }
 
 interface EngineAnswers {
@@ -45,6 +49,16 @@ export default async function () {
       name: 'description',
       message: 'Project description',
       suffix: ':',
+    },
+    {
+      name: 'repository',
+      message: 'Project repository',
+      suffix: ':',
+    },
+    {
+      name: 'keywords',
+      message: 'Project keywords',
+      suffix: ':',
     }
   ])
 
@@ -64,10 +78,18 @@ export default async function () {
 
   const preferredEngineVersion = distTags.find(tag => tag[0] === engine.version)![1]
 
-  const pkg = {
+  console.log(`\nSelected engine version is v${preferredEngineVersion}`)
+
+  const pkg: PackageJson = {
     name: project.name,
     version: project.version,
     description: project.description,
+    type: 'module',
+    keywords: project.keywords.split(',').map(keyword => keyword.trim()),
+    repository: {
+      type: 'git',
+      url: `git+${project.repository}`,
+    },
     scripts: {
       start: 'npx nexusctl start',
       public: 'npx nexusctl start public',
@@ -78,5 +100,47 @@ export default async function () {
     },
   }
 
-  console.log(pkg)
+  console.log('\n')
+
+  const { correct } = await Inquirer.prompt<{ correct: boolean }>({
+    type: 'confirm',
+    name: 'correct',
+    message: 'Is this correct',
+    suffix: '?',
+    default: true,
+  })
+
+  if (!correct) {
+    console.log('Aborted')
+    return
+  }
+
+  console.log('\nWriting package.json...')
+
+  writeFileSync('./package2.json', JSON.stringify(pkg, null, 2))
+
+  console.log('\nInstalling dependencies...')
+
+  await install()
+
+  console.log()
+
+  const { initGit } = await Inquirer.prompt<{ initGit: boolean }>({
+    type: 'confirm',
+    name: 'initGit',
+    message: 'Would you like to initialize a Git repository',
+    suffix: '?',
+  })
+
+  if (initGit) {
+    await initializeGit()
+
+    if (!existsSync('./.gitignore')) {
+      console.log('\nWriting .gitignore...')
+      writeFileSync('.gitignore', 'node_modules\ndist')
+    }
+  }
+
+  console.log('\nYou\'re done!\n\nYou can now start the engine by running `npm start`')
+  console.log('\nTo learn how to add mods to your project, visit https://github.com/NexusEngine/project')
 }
