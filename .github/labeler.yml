@@ -1,0 +1,14 @@
+engine:
+  - packages/engine/*
+  - packages/engine/**/*
+
+config:
+  - packages/config/*
+  - packages/config/**/*
+
+nexusctl:
+  - packages/nexusctl/*
+  - packages/nexusctl/**/*
+
+test:
+  - packages/**/__test__/*.ts
