@@ -16,9 +16,9 @@ Contributions are always welcome!
 7. Add your name and info to the `contributors` array in the appropriate
    `package.json`s (if you have not done so before)
 8. Create a pull request - make sure to mention the issues your pull request
+   fixes, if any
 9. Include the following sentence in your pull request (if you have not done so
-   before): "**I have read the CLA Document and I hereby sign the CLA**" fixes,
-   if any
+   before): "**I have read the CLA Document and I hereby sign the CLA**"
 10. ???
 
 Each pull request should contain a single bug fix or feature.
