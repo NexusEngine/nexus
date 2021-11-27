@@ -30,8 +30,9 @@
     "rimraf": "~3.0.2"
   },
   "dependencies": {
+    "@nexus-engine/config": "*",
     "commander": "^8.3.0",
     "inquirer": "^8.2.0",
-    "@nexus-engine/config": "*"
+    "js-yaml": "^4.1.0"
   }
 }
