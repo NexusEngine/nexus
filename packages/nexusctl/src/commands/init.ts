@@ -3,7 +3,7 @@ import { parse } from 'path'
 import { writeFileSync, existsSync } from 'fs'
 import Inquirer from 'inquirer'
 import { dump } from 'js-yaml'
-import { getDistTags, initializeGit, install } from '../exec.js'
+import { getDistTags, initializeGit, install } from '../lib/exec.js'
 import { checkPackage } from '../helpers.js'
 
 interface ProjectAnswers {
