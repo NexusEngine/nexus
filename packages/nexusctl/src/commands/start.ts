@@ -1,6 +1,6 @@
-import type { Service } from '../lib/spawn'
+import type { Service } from '../lib/execute'
 import { existsSync } from 'fs'
-import { entry, execute } from '../lib/spawn.js'
+import { entry, execute } from '../lib/execute.js'
 
 export type Options = {}
 

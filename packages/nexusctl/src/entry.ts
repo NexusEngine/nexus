@@ -1,5 +1,5 @@
 import type { Options } from './commands/start'
-import { Service } from './lib/spawn.js'
+import type { Service } from './lib/execute.js'
 import { Command } from 'commander'
 
 const program = new Command
