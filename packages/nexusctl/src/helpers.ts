@@ -18,3 +18,42 @@ export async function checkPackage(dir = process.cwd()): Promise<boolean | undef
     })).overwrite
   }
 }
+
+/**
+ * Wait for the user to input a command.
+ * @returns The command
+ */
+export async function waitForCommand(): Promise<string> {
+  return (await Inquirer.prompt<{ command: string }>({
+    name: 'command',
+    prefix: '',
+    message: '>',
+  })).command
+}
+
+/**
+ * Parse a string to an arguments array.
+ * @param text The text string
+ * @returns An array containing values
+ */
+export function commandArgs2Array(text: string) {
+  const re = /^"[^"]*"$/
+  const re2 = /^([^"]|[^"].*?[^"])$/
+
+  let arr: string[] = []
+  let argPart: any = null
+
+  text && text.split(" ").forEach(function (arg) {
+    if ((re.test(arg) || re2.test(arg)) && !argPart) {
+      arr.push(arg)
+    } else {
+      argPart = argPart ? argPart + " " + arg : arg
+      if (/"$/.test(argPart)) {
+        arr.push(argPart)
+        argPart = null
+      }
+    }
+  })
+
+  return arr
+}

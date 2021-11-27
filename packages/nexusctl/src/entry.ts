@@ -22,4 +22,11 @@ program
     await (await import('./commands/start.js')).default(service, options)
   })
 
+program
+  .command('connect [url]')
+  .description('connect to the instance')
+  .action(async (url = 'http://localhost:3406', options) => {
+    await (await import('./commands/connect.js')).default(url, options)
+  })
+
 program.parse(process.argv)
