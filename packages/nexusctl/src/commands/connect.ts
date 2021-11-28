@@ -49,13 +49,18 @@ specCommands.set('.code', async connect => {
  * Connect to an angine instance and manage that instance.
  * @param url The URL to the engine instance
  * @param options Connect options
+ * @param options.token Authorization token
  */
 export default async function (url: string, options: Options) {
-  const connect = new Connector(url)
+  const connect = new Connector(url, options.token)
 
   const response = await connect.command('INFO')
   if (!response.ok) {
-    console.log(`Failed to connect to instance, got status code ${response.status}`)
+    if (response.status === 401) {
+      console.log('Unauthorized')
+    } else {
+      console.log(`Failed to connect to instance, got status code ${response.status}`)
+    }
     return
   } else {
     const data = await response.json() as any

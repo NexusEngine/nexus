@@ -2,7 +2,12 @@ import fetch from 'node-fetch'
 
 export class Connector {
   run = true
-  constructor(readonly url: string) {
+  /**
+   * Create a `Connector` instance for the given URL.
+   * @param url URL to the instance connector
+   * @param token Authorization token
+   */
+  constructor(readonly url: string, readonly token?: string) {
     process.once('SIGINT', () => this.run = false)
   }
 
@@ -13,10 +18,15 @@ export class Connector {
    * @returns A `Response` object for the command call
    */
   async command(command: string, args: string[] = []) {
+    const extraHeaders: Record<string, string> = this.token ? {
+      Authorization: `Basic ${this.token}`
+    } : {}
+
     return fetch(`${this.url}/command/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf8',
+        ...extraHeaders,
       },
       body: JSON.stringify({ command, args })
     })
@@ -28,10 +38,15 @@ export class Connector {
    * @returns A `Response` object for the request
    */
   async script(script: string) {
+    const extraHeaders: Record<string, string> = this.token ? {
+      Authorization: `Basic ${this.token}`
+    } : {}
+
     return fetch(`${this.url}/script/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=utf8',
+        ...extraHeaders,
       },
       body: JSON.stringify({ script })
     })
