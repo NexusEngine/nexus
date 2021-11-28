@@ -26,7 +26,7 @@ program
   .command('connect [url]')
   .description('connect to the instance')
   .option('-t, --token <token>', 'connector token')
-  .action(async (url = 'http://localhost:3406', options) => {
+  .action(async (url = 'tcp://localhost:3406', options) => {
     await (await import('./commands/connect.js')).default(url, options)
   })
 

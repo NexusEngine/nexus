@@ -1,23 +1,20 @@
-import { Server } from 'http'
+import { Server } from 'net'
 import { start } from 'repl'
 
-const server = new Server((req, res) => {
-  res.setHeader('content-type', 'multipart/octet-stream')
-  res.write('Welcome to the REPL\r\n')
-
+const server = new Server(socket => {
   const repl = start({
-    prompt: '> ',
-    input: req,
-    output: res,
+    prompt: '',
+    input: socket,
+    output: socket,
     terminal: false,
     useColors: true,
     useGlobal: true,
     ignoreUndefined: false,
   })
 
-  repl.once('exit', () => res.end())
+  socket.once('close', () => repl.close())
 })
 
-server.listen(5678, () => {
-  console.log('Connector listening')
+server.listen(3406, () => {
+  console.log('Connector listening on port 3406')
 })
