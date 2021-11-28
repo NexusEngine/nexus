@@ -37,7 +37,7 @@ specCommands.set('.code', async connect => {
 
   const response = await connect.script(script)
   if (!response.ok) {
-    console.log(`Unable to execute script, got status code ${response.status}`)
+    console.log(`Failed to execute script, got status code ${response.status}`)
   } else if (response.status === 204) {
     console.log('Script executed')
   } else {
@@ -46,7 +46,7 @@ specCommands.set('.code', async connect => {
 })
 
 /**
- * Connect to an angine instance and manage that instance.
+ * Connect to an engine instance and manage that instance.
  * @param url The URL to the engine instance
  * @param options Connect options
  * @param options.token Authorization token
