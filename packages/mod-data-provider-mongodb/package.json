@@ -1,0 +1,32 @@
+{
+  "name": "@nexus-engine/mod-data-provider-mongodb",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "MongoDB storage provider for Nexus Engine",
+  "author": "Art of Coding <support@artofcoding.nl> (https://artofcoding.nl)",
+  "contributors": [
+    "Michiel van der Velde <michiel@michielvdvelde.nl> (https://michielvdvelde.nl)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nexus-Engine/nexus.git",
+    "directory": "packages/nexusctl"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rimraf -rf ./dist",
+    "compile": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "npm run build",
+    "test": "jest"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "dependencies": {
+    "@nexus-engine/engine": "*",
+    "fast-json-patch": "^3.1.0",
+    "mongodb": "^4.2.0",
+    "nanoid": "^3.1.30"
+  }
+}

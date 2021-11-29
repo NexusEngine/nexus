@@ -1,11 +1,61 @@
+import type { Operation } from 'fast-json-patch'
+import type { BaseShape } from '../objects/GameObject.js'
 import config from '../config'
 
 export type Dispositions = 'data' | 'keyval' | 'stream' | 'pubsub'
 
-export interface DataProvider {}
-export interface KeyvalProvider {}
-export interface StreamProvider {}
-export interface PubsubProvider {}
+export interface BaseProvider {
+  connected: boolean
+  connect(): Promise<void>
+  disconnect(): Promise<void>
+}
+
+/**
+ * Persisent storage provider interface.
+ */
+export interface DataProvider extends BaseProvider {
+  /**
+   * Open a database. If no database name is given,
+   * uses the default database (i.e. the one in the path).
+   * @param dbName The name of the database to open
+   */
+  db(dbName?: string): DataDatabase
+}
+
+export interface DataDatabase {
+  /**
+   * Open a collection.
+   * @param collectionName The name of the collection to open
+   */
+  collection<Shape extends BaseShape = any>(collectionName: string): DataCollection<Shape>
+}
+
+export interface DataCollection<Shape extends BaseShape> {
+  /**
+   * Insert e new document into the collection.
+   * @param data The data to insert
+   * @returns The ID of the document
+   */
+  insert(data: Partial<Shape>): Promise<Shape['_id']>
+
+  /**
+   * Update a document.
+   * @param id The document ID
+   * @param operations The JSON path operations to apply
+   */
+  update(id: Shape['_id'], operations: Operation[]): Promise<void>
+
+  /**
+   * Delete a document.
+   * @param id The document ID
+   * @returns 'true' if the document was deleted
+   */
+  delete(id: Shape['_id']): Promise<boolean>
+}
+
+export interface KeyvalProvider extends BaseProvider {}
+export interface StreamProvider extends BaseProvider {}
+export interface PubsubProvider extends BaseProvider {}
 
 type DispositionToProvider<Disposition extends Dispositions> =
   Disposition extends 'data' ?  DataProvider :

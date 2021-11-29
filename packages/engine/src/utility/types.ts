@@ -54,3 +54,6 @@ export type RecursivePartial<T> = {
 
 // Returns an object with a given key
 export type WithKey<Path extends keyof any> = { [key in Path]: any };
+
+/** Make those properties `K` optional in `T`. */
+export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
