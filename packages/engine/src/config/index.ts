@@ -1,4 +1,4 @@
-import type { Schema } from './schema'
+import type { Schema } from './config'
 import { readFile } from 'fs/promises'
 import { load } from 'js-yaml'
 import { pathToFileURL } from 'url'

@@ -1,3 +1,4 @@
+// npx typescript-json-schema tsconfig.json Schema --include ./packages/engine/src/config/config.ts --defaultProps --required -o ./packages/engine/src/config/config.schema.json
 export type Schema = {
   /**
    * The shard name.
