@@ -1,6 +1,31 @@
-import { server } from './server.js'
-import './token.js'
+import type { Manifest } from '@nexus-engine/engine'
+import { config } from '@nexus-engine/engine'
+import { server as httpServer } from './http/server.js'
+import { server as replServer } from './repl/server.js'
 
-server.listen(3406, () => {
-  console.log('Connector REPL listening on port 3406')
-})
+export const manifest: Manifest = {
+  provides: null,
+}
+
+const enableRepl = !!config.connector?.repl
+const enableHttp = !!config.connector?.http
+
+if (enableRepl) {
+  const replHost = config.connector?.repl?.host ?? 'localhost'
+  const replPort = config.connector?.repl?.port ?? 3406
+
+  await import('./repl/middleware.js')
+  replServer.listen(replPort, replHost, () => {
+    console.log(`Connector REPL listening on tcp://${replHost}:${replPort}`)
+  })
+}
+
+if (enableHttp) {
+  const httpHost = config.connector?.http?.host ?? 'localhost'
+  const httpPort = config.connector?.http?.port ?? 3407
+
+  httpServer.listen(httpPort, httpHost, () => {
+    console.log(`Connector HTTP listening on http://${httpHost}:${httpPort}`)
+  })
+}
+

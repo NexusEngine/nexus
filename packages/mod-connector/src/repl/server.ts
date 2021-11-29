@@ -1,8 +1,8 @@
 import type { Socket } from 'net'
-import type { Middleware } from './utility/compose'
+import type { Middleware } from '../utility/compose'
 import { Server } from 'net'
 import { start } from 'repl'
-import compose from './utility/compose.js'
+import compose from '../utility/compose.js'
 
 const Middlewares = Symbol('middlewares')
 
@@ -26,7 +26,7 @@ const noopAsync = async () => {}
 
 function use(this: ConnectorServer, event: Events, ...middlewares: Middleware<Socket>[]) {
   const middleware = this[Middlewares].get(event) ?? []
-  middlewares.forEach(m => middleware.push(m))
+  middleware.push(...middlewares)
   this[Middlewares].set(event, middleware)
 }
 

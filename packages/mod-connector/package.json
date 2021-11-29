@@ -24,10 +24,14 @@
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "dependencies": {
-    "@nexus-engine/engine": "*"
+    "@koa/router": "^10.1.1",
+    "@nexus-engine/engine": "*",
+    "koa": "^2.13.4",
+    "koa-bodyparser": "^4.3.0"
   },
   "devDependencies": {
     "@types/koa": "^2.13.4",
-    "@types/koa__router": "^8.0.10"
+    "@types/koa__router": "^8.0.10",
+    "@types/koa-bodyparser": "^4.3.4"
   }
 }

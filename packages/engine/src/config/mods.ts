@@ -20,7 +20,7 @@ export type Manifest = {
    *
    * The appropriate files are only imported when necessary.
    */
-  provides: Provide | Provide[],
+  provides: Provide | Provide[] | null,
 }
 
 const mods: {
@@ -39,7 +39,7 @@ export { mods }
  */
 export async function importMods(provide: Provide) {
   for (const { specifier, manifest } of mods) {
-    if (manifest.provides === provide || manifest.provides.includes(provide)) {
+    if (manifest.provides === provide || manifest.provides?.includes(provide)) {
       try {
         await import(`${specifier}/dist/${provide}.js`)
       } catch (err: any) {

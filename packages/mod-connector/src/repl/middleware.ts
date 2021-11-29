@@ -15,7 +15,7 @@ if (token) {
           socket.removeListener('data', handleData)
           if (!str.startsWith('TOKEN')) {
             return reject('ERR_EXPECT_TOKEN')
-          } else if (str.split(' ')[1].trim() !== token) {
+          } else if (str.split(' ')[1]?.trim() !== token) {
             return reject('ERR_INVALID_TOKEN')
           }
           resolve()
