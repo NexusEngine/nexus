@@ -3,6 +3,9 @@ import { config } from '@nexus-engine/engine'
 import { server as httpServer } from './http/server.js'
 import { server as replServer } from './repl/server.js'
 
+export { server as replServer } from './repl/server.js'
+export { server as httpServer } from './http/server.js'
+
 export const manifest: Manifest = {
   provides: null,
 }
@@ -24,6 +27,7 @@ if (enableHttp) {
   const httpHost = config.connector?.http?.host ?? 'localhost'
   const httpPort = config.connector?.http?.port ?? 3407
 
+  await import('./http/middleware.js')
   httpServer.listen(httpPort, httpHost, () => {
     console.log(`Connector HTTP listening on http://${httpHost}:${httpPort}`)
   })
