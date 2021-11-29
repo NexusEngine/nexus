@@ -1,5 +1,5 @@
 import type { Observer, Operation } from 'fast-json-patch'
-import { observe, generate } from 'fast-json-patch'
+import patch from 'fast-json-patch'
 
 /**
  * Represents the base shape for game objects.
@@ -56,7 +56,7 @@ export abstract class GameObject<Shape extends BaseShape> {
     this['#dbName'] = dbName
     this['#collectionName'] = collectionName ?? 'game-objects'
     this['#data'] = data
-    this['#observer'] = observe(data, patches => this['#operations'].push(...patches))
+    this['#observer'] = patch.observe(data, patches => this['#operations'].push(...patches))
   }
 
   /**
@@ -73,7 +73,7 @@ export abstract class GameObject<Shape extends BaseShape> {
    * Flush the currently pending patches to storage.
    */
   async flush() {
-    generate(this['#observer'])
+    patch.generate(this['#observer'])
     // TODO: Actually add patches to persistent storage
   }
 
