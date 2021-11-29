@@ -95,13 +95,13 @@ export function registerProvider<
  * Instantiate a provider for the given disposition, protocol, and path.
  * If no path is given, the configured path for the given disposition will be used.
  * @param disposition The storage disposition
- * @param protocol The storage protocol
  * @param path The storage path (defaults to the configured path for the disposition)
  * @returns A new provider instance
  */
 export function buildProvider<
   Disposition extends Dispositions
->(disposition: Disposition, protocol: string, path = config.storage[disposition].path): DispositionToProvider<Disposition> {
+>(disposition: Disposition, path = config.storage[disposition].path): DispositionToProvider<Disposition> {
+  const { protocol } = new URL(path)
   if (!protocol.endsWith(':')) {
     throw new TypeError(`Invalid protocol: "${protocol}"`)
   }
