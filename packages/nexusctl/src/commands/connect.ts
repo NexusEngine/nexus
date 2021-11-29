@@ -35,8 +35,22 @@ export default async function (urlStr: string, options: Options = {}) {
     if (options.token) {
       socket.write(`TOKEN ${options.token}\r\n`)
       const response = await waitForResponse()
-      if (response.toString('utf-8').trim() !== 'OK') {
-        console.error(`Failed to authenticate to instance: ${response.toString('utf-8')}`)
+      const str = response.toString('utf-8').trim()
+      if (str !== 'OK') {
+        console.error(`Failed to authenticate to instance: ${str}`)
+        return
+      }
+    } else {
+      try {
+        const response = await waitForResponse()
+        const str = response.toString('utf-8').trim()
+        if (str !== 'OK') {
+          console.log(`Failed to connect to instance: ${str}`)
+          return
+        }
+      } catch (err: any) {
+        console.error(`Unexpected data from connector: ${err.message ?? err}`)
+        socket.end()
         return
       }
     }
