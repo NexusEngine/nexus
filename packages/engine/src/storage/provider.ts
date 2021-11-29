@@ -1,12 +1,27 @@
 import type { Operation } from 'fast-json-patch'
-import type { BaseShape } from '../objects/GameObject.js'
+import type { BaseShape } from '../objects/object.js'
 import config from '../config'
+import { Effect } from '../utility/types.js'
 
 export type Dispositions = 'data' | 'keyval' | 'stream' | 'pubsub'
 
+/**
+ * Represents common properties between all storage providers.
+ */
 export interface BaseProvider {
+  /**
+   * Whether or not the provider is currently connected.
+   */
   connected: boolean
+
+  /**
+   * Connect to the provider.
+   */
   connect(): Promise<void>
+
+  /**
+   * Disconnect from the provider.
+   */
   disconnect(): Promise<void>
 }
 
@@ -22,6 +37,9 @@ export interface DataProvider extends BaseProvider {
   db(dbName?: string): DataDatabase
 }
 
+/**
+ * Represents database storage.
+ */
 export interface DataDatabase {
   /**
    * Open a collection.
@@ -30,6 +48,9 @@ export interface DataDatabase {
   collection<Shape extends BaseShape = any>(collectionName: string): DataCollection<Shape>
 }
 
+/**
+ * Represents collection storage.
+ */
 export interface DataCollection<Shape extends BaseShape> {
   /**
    * Insert e new document into the collection.
@@ -53,9 +74,56 @@ export interface DataCollection<Shape extends BaseShape> {
   delete(id: Shape['_id']): Promise<boolean>
 }
 
+/**
+ * Represents key-value storage.
+ */
 export interface KeyvalProvider extends BaseProvider {}
-export interface StreamProvider extends BaseProvider {}
-export interface PubsubProvider extends BaseProvider {}
+
+/**
+ * Represents stream storage.
+ */
+export interface StreamProvider extends BaseProvider {
+  /**
+   * Add an entry to the given stream.
+   * @param key The stream key
+   * @param id The stream ID. If not set, one is generated
+   * @param values A key-value object containing the values to storage
+   */
+  add(key: string, id: string, values: Record<string, any>): Promise<string>
+
+  /**
+   * Start reading from the given stream.
+   * @param key The stream key
+   * @param options Additional options
+   * @param options.id The ID to start reading from
+   * @param options.signal The abort signal
+   */
+  read<Type extends Record<string, any> = any>(key: string, options: {
+    id?: string,
+    signal?: AbortSignal,
+  }): AsyncIterableIterator<[string, Type]>
+}
+
+/**
+ * Represents publish-subscribe storage.
+ */
+export interface PubsubProvider extends BaseProvider {
+  /**
+   * Publish an event and optional values over the given channel.
+   * @param channel The channel to publish to
+   * @param event The event to publish
+   * @param values The values to publish
+   */
+  publish(channel: string, event: string, values?: Record<string, any>): Promise<void>
+
+  /**
+   * Subscribe to a channel.
+   * @param channel The channel to subscribe to
+   * @param fn The handler function
+   * @returns An effect to unsubscribe from the channel
+   */
+  subscribe(channel: string, fn: (event: string, values: Record<string, any>) => void): () => Effect
+}
 
 type DispositionToProvider<Disposition extends Dispositions> =
   Disposition extends 'data' ?  DataProvider :

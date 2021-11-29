@@ -1,5 +1,5 @@
-import { registerProvider } from '@nexus-engine/engine'
-import { DataProviderMongo } from './provider.js'
+import type { Manifest } from '@nexus-engine/engine'
 
-// Register the provider with the engine
-registerProvider('data', 'mongodb:', path => new DataProviderMongo(path))
+export const manifest: Manifest = {
+  provides: 'storage',
+}

@@ -3,7 +3,7 @@ import type { Db, Collection } from 'mongodb'
 import type { Operation } from 'fast-json-patch'
 import { MongoClient } from 'mongodb'
 import { nanoid } from 'nanoid/async'
-import { transform } from '../lib/transform.js'
+import { transform } from './lib/transform.js'
 
 export class DataProviderMongo implements DataProvider {
   #connected = false

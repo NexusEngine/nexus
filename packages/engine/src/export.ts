@@ -7,6 +7,7 @@
  */
 
 // Exported types
+export type { Provide, Manifest } from './config/mods.js'
 export type { Schema } from './config/config'
 export type {
   BaseProvider,
@@ -17,9 +18,9 @@ export type {
   StreamProvider,
   PubsubProvider
 } from './storage/provider.js'
-export type { BaseShape } from './objects/GameObject.js'
+export type { BaseShape } from './objects/object.js'
 
 // Exported values
 export { default as config } from './config/index.js'
-export { GameObject } from './objects/GameObject.js'
+export { GameObject } from './objects/object.js'
 export { registerProvider, buildProvider } from './storage/provider.js'
