@@ -1,8 +1,10 @@
 # Nexus Engine
 
-The core of [Nexus](https://github.com/NexusEngine/nexus).
+The core of the [Nexus Engine](https://github.com/NexusEngine/nexus).
 
 ## Usage
+
+To initialize a new project:
 
 ```
 npx nexusctl init

@@ -1,9 +1,20 @@
-# Nexus Command Line Interface
-
-CLI tool for [Nexus Engine](https://github.com/NexusEngine/nexus).
+# MongoDB Data Provider
 
 ## Usage
 
 ```
-npx nexusctl --help
+npm i @nexus-engine/mod-data-provider-mongodb --strict-peer-deps
+```
+
+In your `.engine.yaml`:
+
+```yaml
+mods:
+  # Enable the mod
+  - '@nexus-engine/mod-data-provider-mongodb'
+
+storage:
+  data:
+    # Use the mongodb: protocol to use the provider
+    path: mongodb://localhost
 ```
