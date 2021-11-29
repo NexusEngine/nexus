@@ -41,4 +41,4 @@ const defaults = {
 const config = {}
 merge(config, defaults)
 merge(config, data)
-export default config as Schema & typeof defaults
+export default config as Record<string, any> & Schema & typeof defaults

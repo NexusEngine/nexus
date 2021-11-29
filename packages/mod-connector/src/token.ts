@@ -1,7 +1,7 @@
 import { server } from './server.js'
 import config from '@nexus-engine/engine/dist/config/index.js'
 
-const token = (config as any).connector?.token
+const token = config.connector?.token
 
 if (token) {
   // Only enable the token middleware if a token is configured
