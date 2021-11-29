@@ -35,7 +35,7 @@ export default async function (urlStr: string, options: Options = {}) {
     if (options.token) {
       socket.write(`TOKEN ${options.token}\r\n`)
       const response = await waitForResponse()
-      if (response.toString('utf-8') !== 'OK') {
+      if (response.toString('utf-8').trim() !== 'OK') {
         console.error(`Failed to authenticate to instance: ${response.toString('utf-8')}`)
         return
       }
