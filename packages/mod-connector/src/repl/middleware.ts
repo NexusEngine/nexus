@@ -5,7 +5,7 @@ const token = config.connector?.token
 
 if (token) {
   // Only enable the token middleware if a token is configured
-  server.use('connect', async (socket, next) => {
+  server.use('connect', async ({ socket }, next) => {
     try {
       await new Promise<void>((resolve, reject) => {
         const handleData = (data: Buffer) => {
