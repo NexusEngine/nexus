@@ -1,4 +1,5 @@
 import config from '../config/index.js'
+import * as Engine from '../export'
 
 export type Provide = 'storage' | 'config'
 
@@ -41,7 +42,7 @@ export async function importMods(provide: Provide) {
   for (const { specifier, manifest } of mods) {
     if (manifest.provides === provide || manifest.provides?.includes(provide)) {
       try {
-        await import(`${specifier}/dist/${provide}.js`)
+        await (await import(`${specifier}/dist/${provide}.js`)).default(Engine)
       } catch (err: any) {
         if (err.code === 'ERR_MODULE_NOT_FOUND') {
           console.log(`Failed to import mod "${specifier}/${provide}". Continuing without.`)
