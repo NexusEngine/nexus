@@ -18,5 +18,4 @@ Developed with :heart: by [Art of Coding](https://artofcoding.nl).
 ## Follow Us!
 
 - [Discord](https://discord.gg/YeXvZK7r2s)
-- [Twitter](https://twitter.com/NexusEngine)
 - [GitHub](https://github.com/Art-of-Coding)
