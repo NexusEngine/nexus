@@ -13,10 +13,14 @@ In your `.engine.yaml` file:
 ```yaml
 mods:
   # Enable the mod
-  - '@nexus-endine/mod-connector'
+  - '@nexus-engine/mod-connector'
 
 # Connector settings
 connector:
-  # TCP path to listen on
-  path: tcp://localhost:3406
+  # Enable REPL
+  repl:
+    path: tcp://localhost:3406
+  # Enable HTTP API
+  http:
+    path: http://localhost:3407
 ```

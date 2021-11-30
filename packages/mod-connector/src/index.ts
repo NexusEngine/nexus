@@ -14,22 +14,24 @@ const enableRepl = !!config.connector?.repl
 const enableHttp = !!config.connector?.http
 
 if (enableRepl) {
-  const replHost = config.connector?.repl?.host ?? 'localhost'
-  const replPort = config.connector?.repl?.port ?? 3406
+  const url = config.connector.repl?.path
+    ? new URL(config.connector.repl.path)
+    : undefined
 
   await import('./repl/middleware.js')
-  replServer.listen(replPort, replHost, () => {
-    console.log(`Connector REPL listening on tcp://${replHost}:${replPort}`)
+  replServer.listen(parseInt(url?.port ?? '3046'), url?.hostname ?? 'localhost', () => {
+    console.log(`Connector REPL listening on ${url ?? 'http://localhost:3406'}`)
   })
 }
 
 if (enableHttp) {
-  const httpHost = config.connector?.http?.host ?? 'localhost'
-  const httpPort = config.connector?.http?.port ?? 3407
+  const url = config.connector?.http?.path
+    ? new URL(config.connector.http.path)
+    : undefined
 
   await import('./http/middleware.js')
-  httpServer.listen(httpPort, httpHost, () => {
-    console.log(`Connector HTTP listening on http://${httpHost}:${httpPort}`)
+  httpServer.listen(parseInt(url?.port ?? '3407'), url?.hostname ?? 'localhost', () => {
+    console.log(`Connector HTTP listening on ${url ?? 'tcp://localhost:3407'}`)
   })
 }
 
