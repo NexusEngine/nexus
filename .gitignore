@@ -2,6 +2,7 @@
 dist
 .env
 packages/**/.coverage
+.coverage
 .engine.yaml
 
 # Logs

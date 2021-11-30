@@ -6,14 +6,12 @@
     "packages/*"
   ],
   "scripts": {
-    "clean": "npm run clean",
-    "build": "npm run build",
-    "pub": "npm publish"
+    "test": "jest"
   },
   "devDependencies": {
     "@types/jest": "^27.0.3",
     "@types/node": "^16.11.10",
-    "jest": "^27.3.1",
+    "jest": "^27.4.0",
     "ts-jest": "^27.0.7",
     "type-fest": "^2.6.0"
   },

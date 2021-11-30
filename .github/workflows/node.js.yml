@@ -28,4 +28,8 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build -ws
-    - run: npm test -ws
+    - run: npm test
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
