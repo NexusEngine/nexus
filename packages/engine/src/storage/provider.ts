@@ -134,7 +134,7 @@ type DispositionToProvider<Disposition extends Dispositions> =
 type ProviderFactory<Disposition extends Dispositions> =
   (path: string) => DispositionToProvider<Disposition>
 
-const providersMap = new Map<Dispositions, {
+export const providersMap = new Map<Dispositions, {
   protocol: string,
   factory: (...args: any[]) => any,
 }[]>()
