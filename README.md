@@ -1,6 +1,7 @@
 # Nexus Engine
 
 ![CI](https://github.com/NexusEngine/nexus/actions/workflows/node.js.yml/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/NexusEngine/nexus/badge.svg)](https://coveralls.io/github/NexusEngine/nexus)
 
 **Nexus Engine** is -- or rather, will be -- a next-generation multiplayer game
 engine back-end.
