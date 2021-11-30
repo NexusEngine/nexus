@@ -1,5 +1,5 @@
 import { server } from './server.js'
-import config from '@nexus-engine/engine/dist/config/index.js'
+import { config } from '@nexus-engine/engine'
 
 const token = config.connector?.token
 
