@@ -1,7 +1,14 @@
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
-module.exports = {
-  preset: 'ts-jest',
+export default {
   testEnvironment: 'node',
+  transform: {},
+  preset: 'ts-jest/presets/default-esm',
+  extensionsToTreatAsEsm: ['.ts'],
+  globals: {
+    'ts-jest': {
+      useESM: true
+    }
+  },
   collectCoverage: true,
   collectCoverageFrom: ['packages/*/src/**/*.ts'],
   coverageDirectory: './.coverage',

@@ -2,6 +2,7 @@
   "name": "@nexus-engine/nexus",
   "private": true,
   "description": "Nexus Engine",
+  "type": "module",
   "workspaces": [
     "packages/*"
   ],
