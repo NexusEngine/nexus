@@ -11,7 +11,7 @@ type Events = 'connect' | 'disconnect'
 /**
  * Represents a TCP server with extra types.
  */
-interface ConnectorServer extends Server {
+interface ReplServer extends Server {
   [Middlewares]: Map<string, Middleware<Socket>[]>
 
   /**
@@ -24,7 +24,7 @@ interface ConnectorServer extends Server {
 
 const noopAsync = async () => {}
 
-function use(this: ConnectorServer, event: Events, ...middlewares: Middleware<Socket>[]) {
+function use(this: ReplServer, event: Events, ...middlewares: Middleware<Socket>[]) {
   const middleware = this[Middlewares].get(event) ?? []
   middleware.push(...middlewares)
   this[Middlewares].set(event, middleware)
@@ -65,6 +65,6 @@ async function handler(socket: Socket) {
   })
 }
 
-export const server = new Server(handler) as ConnectorServer
+export const server = new Server(handler) as ReplServer
 server[Middlewares] = new Map()
 server.use = use.bind(server)
