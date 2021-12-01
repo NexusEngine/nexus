@@ -17,12 +17,13 @@ export class DataProviderMongo implements DataProvider {
 
   async connect() {
     if (this.#connected) {
-      return
+      return this
     }
 
     await this.client.connect()
     this.#connected = true
     this.client.on('close', () => this.#connected = false)
+    return this
   }
 
   async disconnect() {
