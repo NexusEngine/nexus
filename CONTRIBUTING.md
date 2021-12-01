@@ -23,6 +23,39 @@ Contributions are always welcome!
 
 Each pull request should contain a single bug fix or feature.
 
+### Developing
+
+Fork the repository.
+
+```
+git clone https://github.com/<your-github-username>/nexus
+cd nexus
+npm i && npm i -ws
+```
+
+> We are using `npm` workspaces. To learn more about workspaces,
+> [visit the npm documentation](https://docs.npmjs.com/cli/v8/using-npm/workspaces).
+
+Then you can either build a single package:
+
+```
+npm run build -w packages/<name>
+```
+
+Or you can build all packages:
+
+```
+npm run build -ws
+```
+
+#### Running tests
+
+Tests are run globally, meaning each test suite is run each time.
+
+```
+npm test
+```
+
 ## Branch Conventions
 
 - A bug fix which increments the patch version: `fix/{descriptive-name}`
@@ -30,7 +63,7 @@ Each pull request should contain a single bug fix or feature.
 - A change which increments the major version: `breaking/{descriptive-name}`
 - A change to the documentation only: `documentation/{descriptive-name}`
 
-## Version Policy
+## Versioning Policy
 
 The patch version is incremented if:
 
