@@ -1,6 +1,6 @@
 import type { Operation } from 'fast-json-patch'
 import type { DataProvider, DataDatabase, DataCollection } from '../provider.js'
-import type { BaseShape } from '../../objects/object.js'
+import type { BaseShape } from '../../game/object.js'
 import { nanoid } from 'nanoid/async'
 
 const dbMap = new Map<string, Map<string, Record<string, any>>>()

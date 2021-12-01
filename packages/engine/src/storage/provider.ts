@@ -1,5 +1,5 @@
 import type { Operation } from 'fast-json-patch'
-import type { BaseShape } from '../objects/object.js'
+import type { BaseShape } from '../game/object.js'
 import config from '../config'
 import { Effect } from '../utility/types.js'
 
