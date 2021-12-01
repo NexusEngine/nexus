@@ -4,5 +4,5 @@ import { DataProviderMongo } from './provider.js'
 export default async function (engine: typeof Engine) {
   // Register the provider with the engine
   engine.registerProvider('data', 'mongodb:', path => new DataProviderMongo(path))
-  console.log('storgage provider registered')
+  console.log('storage provider registered')
 }
