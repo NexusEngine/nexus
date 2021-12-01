@@ -17,7 +17,7 @@ export interface BaseProvider {
   /**
    * Connect to the provider.
    */
-  connect(): Promise<void>
+  connect(): Promise<this>
 
   /**
    * Disconnect from the provider.
@@ -160,7 +160,7 @@ export function registerProvider<
 }
 
 /**
- * Instantiate a provider for the given disposition, protocol, and path.
+ * Instantiate a provider for the given disposition and path.
  * If no path is given, the configured path for the given disposition will be used.
  * @param disposition The storage disposition
  * @param path The storage path (defaults to the configured path for the disposition)
