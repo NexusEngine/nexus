@@ -1,4 +1,5 @@
-import { hooks, registerGlobal } from '../game/symbols'
+import { registerGlobal } from '../utility/global'
+import { hooks } from '../engine/symbols'
 
 export interface Engine {
   register: typeof hooks.register,

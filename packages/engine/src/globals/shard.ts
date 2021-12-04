@@ -1,4 +1,4 @@
-import { registerGlobal } from '../game/symbols'
+import { registerGlobal } from '../utility/global'
 import { hooks } from '../shard/symbols'
 
 export interface Shard {

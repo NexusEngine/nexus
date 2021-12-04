@@ -2,7 +2,7 @@
 import type { default as JSONPatcherProxyType } from 'jsonpatcherproxy'
 // @ts-expect-error
 import { JSONPatcherProxy } from 'jsonpatcherproxy'
-import { registerGlobal } from '../game/symbols'
+import { registerGlobal } from '../utility/global'
 
 declare global {
   interface BaseShape<Type = any> {
