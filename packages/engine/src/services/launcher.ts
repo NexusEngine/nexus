@@ -1,4 +1,4 @@
-import { importMods } from '../config/mods.js'
+import { importMods } from '../config/mods'
 
 await importMods('launcher')
 

@@ -1,4 +1,4 @@
-import { hooks, registerGlobal } from '../game/symbols.js'
+import { hooks, registerGlobal } from '../game/symbols'
 
 export namespace Nexus {
   export interface Store {

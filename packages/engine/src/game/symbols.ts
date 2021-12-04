@@ -1,5 +1,5 @@
-import { makeHookRegistration } from '../utility/hook.js'
-import { config } from '../config/index.js'
+import { makeHookRegistration } from '../utility/hook'
+import { config } from '../config/index'
 
 export const hooks = makeHookRegistration<{
   // Executed when the engine is first started and mod manifests have been imported

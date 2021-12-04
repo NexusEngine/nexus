@@ -2,7 +2,7 @@ import type { Schema } from './config'
 import { pathToFileURL } from 'url'
 import { readFileSync } from 'fs'
 import { load } from 'js-yaml'
-import { runOnce } from '../utility/memoize.js'
+import { runOnce } from '../utility/memoize'
 import { merge } from '../utility/utility'
 
 export const configPath = new URL('.nexus.yml', `${pathToFileURL(process.cwd())}/`)

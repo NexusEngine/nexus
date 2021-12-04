@@ -1,5 +1,5 @@
-import * as Fn from './functional.js';
-import { lateCallback } from './memoize.js';
+import * as Fn from './functional';
+import { lateCallback } from './memoize';
 
 export function makeHookRegistration<keys extends Record<string, any>>() {
   const hooksByName = new Map<keyof any, any[]>();
