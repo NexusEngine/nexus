@@ -28,6 +28,12 @@ if (!Object.keys(services).includes(service)) {
   process.exit(3)
 }
 
+// Import globals
+import './globals/engine'
+import './globals/memory'
+import './globals/store'
+import './globals/stream'
+
 // Load mods
 if (config().mods?.length) {
   await loadMods(...config().mods!)
