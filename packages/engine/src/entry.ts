@@ -34,6 +34,7 @@ import './globals/store'
 import './globals/stream'
 import './globals/engine'
 import './globals/game'
+import './globals/shard'
 import './game/object'
 
 // Load mods
