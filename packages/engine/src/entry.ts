@@ -29,10 +29,12 @@ if (!Object.keys(services).includes(service)) {
 }
 
 // Import globals
-import './globals/engine'
 import './globals/memory'
 import './globals/store'
 import './globals/stream'
+import './globals/engine'
+import './globals/game'
+import './game/object'
 
 // Load mods
 if (config().mods?.length) {
