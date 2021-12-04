@@ -3,7 +3,7 @@ dist
 .env
 packages/**/.coverage
 .coverage
-.engine.yaml
+.nexus.yml
 
 # Logs
 logs
