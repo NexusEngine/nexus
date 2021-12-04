@@ -1,4 +1,4 @@
-import { hooks } from '../game/symbols'
+import { hooks } from '../engine/symbols'
 import { registerGlobal } from '../utility/global'
 
 export namespace Nexus {

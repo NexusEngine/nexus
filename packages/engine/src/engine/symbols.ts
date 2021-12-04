@@ -1,6 +1,9 @@
 import { makeHookRegistration } from '../utility/hook'
+import { config } from '../config'
 
 export const hooks = makeHookRegistration<{
-  /** Run when the shutdown command is given. */
-  shutdown(time: number): void
+  // Executed when the engine is first started and mod manifests have been imported
+  preInitializer: (c: ReturnType<typeof config>) => void,
+  // Executed after storage providers have been imported
+  postInitializer: (c: ReturnType<typeof config>) => void,
 }>()
