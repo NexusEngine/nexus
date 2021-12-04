@@ -1,0 +1,38 @@
+{
+  "name": "@nexus-engine/mod-connector",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./dist/manifest.js",
+  "author": "Art of Coding <nexus@artofcoding.nl> (https://artofcoding.nl)",
+  "contributors": [
+    "Michiel van der Velde <michiel@michielvdvelde.nl> (https://michielvdvelde.nl)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nexus-Engine/nexus.git",
+    "directory": "packages/mod-connector"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rimraf -rf ./dist",
+    "compile": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "npm run build"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "dependencies": {
+    "@koa/router": "^10.1.1",
+    "koa": "^2.13.4",
+    "koa-bodyparser": "^4.3.0"
+  },
+  "peerDependencies": {
+    "@nexus-engine/engine": "*"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.13.4",
+    "@types/koa__router": "^8.0.10",
+    "@types/koa-bodyparser": "^4.3.4"
+  }
+}
