@@ -6,6 +6,7 @@
   "contributors": [
     "Michiel van der Velde <michiel@michielvdvelde.nl> (https://michielvdvelde.nl)"
   ],
+  "main": "./dist/export.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Nexus-Engine/nexus.git",
