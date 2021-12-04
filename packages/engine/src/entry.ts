@@ -1,6 +1,6 @@
 import { config } from './config/index.js'
 import { loadMods, importMods } from './config/mods.js'
-import { hooks } from './game/symbols.js'
+import { hooks } from './engine/symbols.js'
 
 const requiredFlags = [
   '--experimental-specifier-resolution=node',
