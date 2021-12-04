@@ -2,6 +2,7 @@
 import type { default as JSONPatcherProxyType } from 'jsonpatcherproxy'
 // @ts-expect-error
 import { JSONPatcherProxy } from 'jsonpatcherproxy'
+import { registerGlobal } from '../game/symbols'
 
 declare global {
   interface BaseShape<Type = any> {
@@ -63,4 +64,4 @@ export abstract class GameObject<Shape extends BaseShape> {
   }
 }
 
-globalThis.GameObject = GameObject
+registerGlobal(GameObject)
