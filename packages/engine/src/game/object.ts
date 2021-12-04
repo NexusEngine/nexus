@@ -1,95 +1,66 @@
-import type { Observer, Operation } from 'fast-json-patch'
-import patch from 'fast-json-patch'
+// NOTE: Weird import because of jsonpatcherproxy's messed up types
+import type { default as JSONPatcherProxyType } from 'jsonpatcherproxy'
+// @ts-expect-error
+import { JSONPatcherProxy } from 'jsonpatcherproxy'
 
-/**
- * Represents the base shape for game objects.
- */
-export interface BaseShape<Type = any> {
-  _id: Type,
-}
-
-/**
- * Represents the abstract game object which can be extended
- * by your own game objects.
- *
- * @example
- * class MyGameObject extends GameObject<MyGameObjectShape> {
- *  // ...
- * }
- */
-export abstract class GameObject<Shape extends BaseShape> {
-  /**
-   * The name of the database to store this object in.
-   * If the name is `null`, the default database will be used.
-   */
-  readonly ['#dbName']: string | null
-
-  /**
-   * The name of the collection to store this object in.
-   * If the name is `null`, the default collection `game-objects` will be used.
-   */
-  readonly ['#collectionName']: string
-
-  /**
-   * The underlying data structure that represents this object.
-   */
-  ['#data']: Shape
-
-  /**
-   * The data observer generates JSON patches for each mutation
-   * to the underlying data structure.
-   */
-  ['#observer']: Observer<Shape>
-
-  /**
-   * Unprocessed JSON patches.
-   */
-  ['#operations']: Operation[] = []
-
-  /**
-   * Instantiate the game object with the given properties.
-   * @param dbName The database name. If `null`, the default database will be used
-   * @param collectionName The collection name. If `null`, the default collection will be used
-   * @param data The data which represents this object
-   */
-  constructor(dbName: string | null, collectionName: string | null, data: Shape) {
-    this['#dbName'] = dbName
-    this['#collectionName'] = collectionName ?? 'game-objects'
-    this['#data'] = data
-    this['#observer'] = patch.observe(data, patches => this['#operations'].push(...patches))
+declare global {
+  interface BaseShape<Type = any> {
+    _id: Type,
   }
 
-  /**
-   * Get the number of pending (not flushed) patch operations.
-   */
-  get ['#pendingOperations']() { return this['#operations'].length }
+  // Use import statement to avoid circular references
+  var GameObject: typeof import('./object').GameObject
+}
 
-  /**
-   * The unique identifier for this object.
-   */
+export abstract class GameObject<Shape extends BaseShape> {
+  readonly ['#dbName']: string | null
+  readonly ['#collectionName']: string
+  ['#data']: Shape
+  #proxy: JSONPatcherProxyType<Shape>
+
+  constructor(data: Shape)
+  constructor(dbName: string | null, collectionName: string, data: Shape)
+  constructor(dbOrData: Shape | string | null, collectionName?: string, data?: Shape) {
+    if (arguments.length === 1) {
+      this['#dbName'] = null
+      this['#collectionName'] = 'objects'
+    } else {
+      this['#dbName'] = dbOrData as string | null
+      this['#collectionName'] = collectionName!
+    }
+    this.#proxy = new JSONPatcherProxy(data ?? dbOrData)
+    this['#data'] = this.#proxy.observe(true) as Shape
+  }
+
   get id() { return this['#data']._id }
 
   /**
-   * Flush the currently pending patches to storage.
+   * Flush the pending shape changes to the store.
    */
   async flush() {
-    patch.generate(this['#observer'])
-    // TODO: Actually add patches to persistent storage
+    const patches = this.#proxy.generate()
+    if (patches.length) {
+      await Store
+        .db(this['#dbName'] ?? undefined)
+        .collection<Shape>(this['#collectionName'])
+        .update(this.id, patches)
+    }
   }
 
   /**
-   * Stop observing the object shape.
+   * Revoke the data observer proxy, preparing it for garbage collection.
    */
-  unobserve() {
-    this['#observer'].unobserve()
+  revoke() {
+    this.#proxy.revoke()
   }
 
   /**
-   * Flush the currently pending patches to storage
-   * and stop observing the object shape.
+   * Flush changes to storage and revoke the data observer proxy.
    */
-  async flushAndUnobserve() {
+  async flushAndRevoke() {
     await this.flush()
-    this.unobserve()
+    this.revoke()
   }
 }
+
+globalThis.GameObject = GameObject

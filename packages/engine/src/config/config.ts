@@ -26,7 +26,7 @@ export type Schema = {
     /**
      * Persistent data storage settings
      */
-    data?: {
+    store?: {
       /**
        * Persistent data storage path
        */
@@ -35,7 +35,7 @@ export type Schema = {
     /**
      * Key-value store settings
      */
-    keyval?: {
+    memory?: {
       /**
        * Key-value store path
        */
@@ -47,15 +47,6 @@ export type Schema = {
     stream?: {
       /**
        * Stream path
-       */
-      path?: string,
-    },
-    /**
-     * Pub-sub settings
-     */
-    pubsub?: {
-      /**
-       * Pub-sub path
        */
       path?: string,
     },

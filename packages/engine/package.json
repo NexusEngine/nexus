@@ -2,8 +2,7 @@
   "name": "@nexus-engine/engine",
   "version": "0.1.0",
   "type": "module",
-  "main": "./dist/export.js",
-  "author": "Art of Coding <support@artofcoding.nl> (https://artofcoding.nl)",
+  "author": "Art of Coding <nexus@artofcoding.nl> (https://artofcoding.nl)",
   "contributors": [
     "Michiel van der Velde <michiel@michielvdvelde.nl> (https://michielvdvelde.nl)"
   ],
@@ -19,8 +18,7 @@
     "build": "npm run clean && npm run compile",
     "clean": "rimraf -rf ./dist",
     "compile": "tsc -p tsconfig.build.json",
-    "prepublishOnly": "npm run build",
-    "test": "jest"
+    "prepublishOnly": "npm run build"
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "devDependencies": {
@@ -28,7 +26,7 @@
     "rimraf": "~3.0.2"
   },
   "dependencies": {
-    "fast-json-patch": "^3.1.0",
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "jsonpatcherproxy": "^0.1.0-0"
   }
 }

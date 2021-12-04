@@ -9,15 +9,17 @@
   "scripts": {
     "test": "jest"
   },
-  "devDependencies": {
-    "@types/jest": "^27.0.3",
-    "@types/node": "^16.11.10",
-    "jest": "^27.4.0",
-    "ts-jest": "^27.0.7",
-    "type-fest": "^2.6.0"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nexus-Engine/nexus.git"
   },
   "engines": {
     "npm": ">=7",
     "node": ">=16"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.3",
+    "jest": "^27.4.3",
+    "ts-jest": "^27.0.7"
   }
 }

@@ -1,4 +1,4 @@
-import type { Union } from './types'
+import type { Union } from './types';
 
 // Wrapper around Object.assign that enforces assigned types already exist
 export function assign<Result extends Base, Base = Result, Type extends Base = Base>(target: Result, source: Partial<Type>): Result {
@@ -140,34 +140,4 @@ export function asUnion<Type>(value: Type): asserts value is Union<Type> { }
 // forces the type to be that.
 export function hackyIterableToArray<Type>(value: Iterable<Type>): asserts value is Type[] {
   return value as never;
-}
-
-// Deduplicate arrays and create a new array with unique elements
-export function deduplicate<Type>(...arrays: Type[][]) {
-  const result: Type[] = []
-  for (const array of arrays) {
-    for (const value of array) {
-      if (!result.includes(value)) {
-        result.push(value)
-      }
-    }
-  }
-  return result
-}
-
-// extracted/copied from bullmq
-// https://github.com/taskforcesh/bullmq/blob/master/src/utils.ts
-export function array2object<Type extends Record<string, any>>(arr: any[]): Type {
-  const obj: any = {}
-
-  for (let i = 0; i < arr.length; i += 2) {
-    obj[arr[i]] = arr[i + 1]
-  }
-
-  return obj
-}
-
-/** Shorthand function to map an object to an array */
-export function toArray<Type extends Record<string, any>>(type: Type): any[] {
-  return Object.keys(type).flatMap(key => [key, type[key]])
 }

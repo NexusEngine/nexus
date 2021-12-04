@@ -1,53 +1,55 @@
-import config from '../config/index.js'
-import * as Engine from '../export'
 
-export type Provide = 'storage' | 'config'
+declare global {
+  type Provide = 'store'
+    | 'memory'
+    | 'stream'
+    | 'game'
+    | 'shard'
+    | 'launcher'
+    | 'processor'
+    | 'public'
 
-/**
- * A mod manifest presents metadata to the engine.
- * Each mod must have a manifest present in its main file.
- *
- * @example
- *
- * import type { Manifest } from '@nexus-engine/engine'
- * export const manifest: Manifest = {
- *    provides: ['storage', 'config'],
- * }
- */
-export type Manifest = {
-  /**
-   * Keys which this mod provides to the engine.
-   * A mod can provide zero, one, or more keys simultaneously.
-   *
-   * The appropriate files are only imported when necessary.
-   */
-  provides: Provide | Provide[] | null,
+  interface Manifest {
+    provides: Provide | Provide[] | null,
+    paths?: Partial<Record<Provide, string>>
+  }
 }
 
-const mods: {
+const loaded = new Set<string>()
+export const mods: {
   specifier: string,
   manifest: Manifest,
-}[] = await Promise.all((config.mods ?? []).map(async specifier => {
-  const manifest = (await import(specifier)).manifest as Manifest
-  return { specifier, manifest }
-}))
+}[] = []
 
-export { mods }
+export async function loadMods(...specifiers: string[]) {
+  for (const specifier of specifiers) {
+    if (loaded.has(specifier)) {
+      continue
+    }
+    try {
+      const manifest = (await import(specifier)).manifest as Manifest
+      mods.push({ specifier, manifest })
+      loaded.add(specifier)
+    } catch (err: any) {
+      if (err.code === 'ERR_MODULE_NOT_FOUND') {
+        console.log(`Failed to load mod "${specifier}". Continuing without.`)
+        console.error(err)
+      } else {
+        throw err
+      }
+    }
+  }
+}
 
-/**
- * Import mods for the given provide key.
- * @param provide The provide key
- */
 export async function importMods(provide: Provide) {
   for (const { specifier, manifest } of mods) {
     if (manifest.provides === provide || manifest.provides?.includes(provide)) {
+      const path = manifest.paths?.[provide] ?? `/dist/${provide}.js`
       try {
-        await (await import(`${specifier}/dist/${provide}.js`)).default(Engine)
+        await import(`${specifier}${path}`)
       } catch (err: any) {
         if (err.code === 'ERR_MODULE_NOT_FOUND') {
-          console.log(`Failed to import mod "${specifier}/${provide}". Continuing without.`)
-        } else {
-          throw err
+          console.log(`Failed to import mod "${specifier}${path}". Continuing without.`)
         }
       }
     }
