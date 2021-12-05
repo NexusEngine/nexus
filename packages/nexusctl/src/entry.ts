@@ -22,4 +22,12 @@ program
     await (await import('./commands/start.js')).default(service, options)
   })
 
+program
+  .command('connect [url]')
+  .description('connect to the instance repl')
+  .option('-t, --token', 'authentication token')
+  .action(async (url = 'tcp://localhost:3406', options) => {
+    await (await import('./commands/connect.js')).default(url, options)
+  })
+
 program.parse(process.argv)
