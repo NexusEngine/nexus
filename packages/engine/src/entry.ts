@@ -45,7 +45,7 @@ if (config().mods?.length) {
 }
 
 // Run pre-initialization hooks
-hooks.makeIterated('preInitializer')(config())
+hooks.makeIterated('preInitializer')()
 
 // Import storage providers early
 await Promise.all([
@@ -55,7 +55,7 @@ await Promise.all([
 ])
 
 // Run post-initialization hooks
-hooks.makeIterated('postInitializer')(config())
+hooks.makeIterated('postInitializer')()
 
 // Import the service
 await import(services[service])

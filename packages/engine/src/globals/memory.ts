@@ -1,5 +1,6 @@
 import { hooks } from '../engine/symbols'
 import { registerGlobal } from '../utility/global'
+import { config } from '../config'
 
 const providersMap = new Map<string, (path: string) => Nexus.Memory>()
 
@@ -22,6 +23,6 @@ function buildMemory(path: string) {
 registerGlobal(registerMemory)
 registerGlobal(buildMemory)
 
-hooks.register('postInitializer', config => {
-  registerGlobal('Memory', buildMemory(config.storage.store.path))
+hooks.register('postInitializer', () => {
+  registerGlobal('Memory', buildMemory(config().storage.store.path))
 })

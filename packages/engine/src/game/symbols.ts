@@ -1,5 +1,3 @@
 import { makeHookRegistration } from '../utility/hook'
 
-export const hooks = makeHookRegistration<{
-  // TODO
-}>()
+export const hooks = makeHookRegistration<Nexus.Events.Game>()

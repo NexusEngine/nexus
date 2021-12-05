@@ -1,10 +1,8 @@
 import { registerGlobal } from '../utility/global'
-// import { hooks } from '../engine/symbols'
+import { hooks } from '../engine/symbols'
 
 const engine: Nexus.Engine = {
-  register(name, handler) {
-    // TODO
-  }
+  register: hooks.register
 }
 
 registerGlobal('Engine', engine)

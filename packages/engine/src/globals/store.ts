@@ -1,5 +1,6 @@
 import { hooks } from '../engine/symbols'
 import { registerGlobal } from '../utility/global'
+import { config } from '../config'
 
 const providersMap = new Map<string, (path: string) => Nexus.Store>()
 
@@ -22,6 +23,6 @@ function buildStore(path: string) {
 registerGlobal(registerStore)
 registerGlobal(buildStore)
 
-hooks.register('postInitializer', config => {
-  registerGlobal('Store', buildStore(config.storage.store.path))
+hooks.register('postInitializer', () => {
+  registerGlobal('Store', buildStore(config().storage.store.path))
 })

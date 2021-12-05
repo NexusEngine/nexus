@@ -31,18 +31,35 @@ declare module 'mods' {
 
     namespace Nexus {
       namespace Events {
-        interface EngineEvents {
-          preInitializer: (config: any) => void
-          postInitializer: (config: any) => void
+        interface Engine {
+          preInitializer: () => void
+          postInitializer: () => void
+        }
+
+        interface Shard {
+          /** Run on instance initialization. */
+          environment(): void,
+          /** Run when an instance has started up. */
+          startup(id: string): void
+          /** Run when the shutdown command is given. */
+          shutdown(time: number): void
+        }
+
+        interface Game {
+          // TODO
         }
       }
 
       interface Engine {
-        register<Key extends keyof Events.EngineEvents>(name: Key, handler: Events.EngineEvents[Key]): void
+        register<Key extends keyof Events.Engine>(name: Key, handler: Events.Engine[Key]): void
       }
 
-      interface Shard { }
+      interface Shard {
+        register<Key extends keyof Events.Shard>(name: Key, handler: Events.Shard[Key]): void
+      }
+
       interface Game {
+        register<Key extends keyof Events.Game>(name: Key, handler: Events.Game[Key]): void
         registerObject<Target extends typeof GameObject>(target: Target, name?: string): void
       }
 

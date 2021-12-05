@@ -1,5 +1,6 @@
 import { hooks } from '../engine/symbols'
 import { registerGlobal } from '../utility/global'
+import { config } from '../config'
 
 const providersMap = new Map<string, (path: string) => Nexus.Stream>()
 
@@ -22,6 +23,6 @@ function buildStream(path: string) {
 registerGlobal(registerStream)
 registerGlobal(buildStream)
 
-hooks.register('postInitializer', config => {
-  registerGlobal('Stream', buildStream(config.storage.store.path))
+hooks.register('postInitializer', () => {
+  registerGlobal('Stream', buildStream(config().storage.store.path))
 })
