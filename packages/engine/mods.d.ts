@@ -30,7 +30,17 @@ declare module 'mods' {
     }
 
     namespace Nexus {
-      interface Engine { }
+      namespace Events {
+        interface EngineEvents {
+          preInitializer: (config: any) => void
+          postInitializer: (config: any) => void
+        }
+      }
+
+      interface Engine {
+        register<Key extends keyof Events.EngineEvents>(name: Key, handler: Events.EngineEvents[Key]): void
+      }
+
       interface Shard { }
       interface Game {
         registerObject<Target extends typeof GameObject>(target: Target, name?: string): void

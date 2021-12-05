@@ -14,7 +14,7 @@
   },
   "files": [
     "dist",
-    "mods.ds.ts"
+    "mods.d.ts"
   ],
   "scripts": {
     "build": "npm run clean && npm run compile",
