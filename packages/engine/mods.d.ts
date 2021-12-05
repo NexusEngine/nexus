@@ -14,6 +14,21 @@ declare module 'mods' {
       paths?: Partial<Record<Provide, string>>
     }
 
+    interface BaseShape<Type = any> {
+      _id: Type
+    }
+
+    abstract class GameObject<Shape extends BaseShape> {
+      constructor(data: Shape)
+      constructor(dbName: string | null, collectionName: string, data: Shape)
+      constructor(dbOrData: Shape | string | null, collectionName?: string, data?: Shape)
+
+      get id(): Shape['_id']
+      flush(): Promise<void>
+      revoke(): void
+      flushAndRevoke(): Promise<void>
+    }
+
     namespace Nexus {
       interface Engine { }
       interface Shard { }

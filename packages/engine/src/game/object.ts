@@ -4,16 +4,7 @@ import type { default as JSONPatcherProxyType } from 'jsonpatcherproxy'
 import { JSONPatcherProxy } from 'jsonpatcherproxy'
 import { registerGlobal } from '../utility/global'
 
-declare global {
-  interface BaseShape<Type = any> {
-    _id: Type,
-  }
-
-  // Use import statement to avoid circular references
-  var GameObject: typeof import('./object').GameObject
-}
-
-export abstract class GameObject<Shape extends BaseShape> {
+abstract class GameObject<Shape extends BaseShape> {
   readonly ['#dbName']: string | null
   readonly ['#collectionName']: string
   ['#data']: Shape

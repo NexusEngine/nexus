@@ -1,4 +1,4 @@
-import { hooks } from '../game/symbols'
+// import { hooks } from '../game/symbols'
 import { registerGlobal } from '../utility/global'
 
 const objectsMap = new Map<string, typeof GameObject>()
