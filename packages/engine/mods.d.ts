@@ -9,6 +9,17 @@ declare module 'mods' {
       | 'processor'
       | 'public'
 
+    /**
+     * The manifest provides the engine with the configuration
+     * details of the mod. Each mod should export a `manifest`
+     * property which conforms to this interface.
+     *
+     * ```ts
+     * export const manifest: Manifest = {
+     *   provides: 'game'
+     * }
+     * ```
+     */
     interface Manifest {
       provides: Provide | Provide[] | null,
       paths?: Partial<Record<Provide, string>>
@@ -49,19 +60,39 @@ declare module 'mods' {
     }
 
     namespace Nexus {
+      /**
+       * Contains all events the engine produces.
+       */
       namespace Events {
         interface Engine {
+          /**
+           * Run after mod manifests have been imported
+           * but before the storage providers are registered.
+           */
           preInitializer: () => void
+
+          /**
+           * Run after storage providers are registered.
+           */
           postInitializer: () => void
         }
 
         interface Shard {
-          /** Run on instance initialization. */
-          environment(): void,
-          /** Run when an instance has started up. */
-          startup(id: string): void
-          /** Run when the shutdown command is given. */
-          shutdown(time: number): void
+          /**
+           * Run when the engine instance is first initialized.
+           */
+          environment: () => void
+
+          /**
+           * Run on shard startup.
+           */
+          startup: () => void
+
+          /**
+           * Run when the shard shutdown command has been given
+           * @param time The time when the shard must shut down
+           */
+          shutdown: (time: number) => void
         }
 
         interface Game {
@@ -70,16 +101,37 @@ declare module 'mods' {
       }
 
       interface Engine {
+        /**
+         * Register an event handler.
+         * @param name The name of the event
+         * @param handler The event handler
+         */
         register<Key extends keyof Events.Engine>(name: Key, handler: Events.Engine[Key]): void
         config: Configuration
       }
 
       interface Shard {
+        /**
+         * Register an event handler.
+         * @param name The name of the event
+         * @param handler The event handler
+         */
         register<Key extends keyof Events.Shard>(name: Key, handler: Events.Shard[Key]): void
       }
 
       interface Game {
+        /**
+         * Register an event handler.
+         * @param name The name of the event
+         * @param handler The event handler
+         */
         register<Key extends keyof Events.Game>(name: Key, handler: Events.Game[Key]): void
+
+        /**
+         * Register an object with the game instance.
+         * @param target The target constructor to register
+         * @param name The name of the object
+         */
         registerObject<Target extends typeof GameObject>(target: Target, name?: string): void
       }
 
@@ -375,7 +427,17 @@ declare module 'mods' {
     var Memory: Nexus.Memory
     var Stream: Nexus.Stream
 
+    /**
+     * Register a `Memory` provider with the given protocol.
+     * @param protocol The provider protocol
+     * @param factory The factory method
+     */
     var registerMemory: (protocol: string, factory: (path: string) => Nexus.Memory) => void
+
+    /**
+     * Build a store for the given path.
+     * @param path The path
+     */
     var buildMemory: (path: string) => Nexus.Memory
 
     /**
@@ -391,7 +453,17 @@ declare module 'mods' {
      */
     var buildStore: (path: string) => Nexus.Store
 
+    /**
+     * Register a `Stream` provider with the given protocol.
+     * @param protocol The provider protocol
+     * @param factory The factory method
+     */
     var registerStream: (protocol: string, factory: (path: string) => Nexus.Stream) => void
+
+    /**
+     * Build a store for the given path.
+     * @param path The path
+     */
     var buildStream: (path: string) => Nexus.Stream
   }
 }
