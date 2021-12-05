@@ -8,6 +8,7 @@ declare module 'mods' {
       | 'launcher'
       | 'processor'
       | 'public'
+      | 'engine'
 
     /**
      * The manifest provides the engine with the configuration
