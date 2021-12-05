@@ -6,14 +6,15 @@
   "contributors": [
     "Michiel van der Velde <michiel@michielvdvelde.nl> (https://michielvdvelde.nl)"
   ],
-  "main": "./dist/export.js",
+  "types": "./mods.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Nexus-Engine/nexus.git",
     "directory": "packages/engine"
   },
   "files": [
-    "dist"
+    "dist",
+    "mods.d.ts"
   ],
   "scripts": {
     "build": "npm run clean && npm run compile",
