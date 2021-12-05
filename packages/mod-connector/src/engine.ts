@@ -2,7 +2,8 @@ import { server as replServer } from './repl/server'
 import { server as httpServer } from './http/server'
 
 // Register the REPL server, if enabled
-Engine.register('postInitializer', config => {
+Engine.register('postInitializer', () => {
+  const { config } = Engine
   const enableRepl = !!config.connector?.repl
 
   if (enableRepl) {
@@ -22,7 +23,8 @@ Engine.register('postInitializer', config => {
 })
 
 // Register the HTTP server, if enabled
-Engine.register('postInitializer', config => {
+Engine.register('postInitializer', () => {
+  const { config } = Engine
   const enableHttp = !!config.connector?.http
 
   if (enableHttp) {

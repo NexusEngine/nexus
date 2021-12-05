@@ -18,6 +18,25 @@ declare module 'mods' {
       _id: Type
     }
 
+    type Configuration = Record<string, any> & {
+      shard: string,
+      mods?: string[],
+      public: {
+        path: string,
+      },
+      storage: {
+        store: {
+          path: string,
+        },
+        memory: {
+          path: string,
+        },
+        stream: {
+          path: string,
+        }
+      }
+    }
+
     abstract class GameObject<Shape extends BaseShape> {
       constructor(data: Shape)
       constructor(dbName: string | null, collectionName: string, data: Shape)
@@ -52,6 +71,7 @@ declare module 'mods' {
 
       interface Engine {
         register<Key extends keyof Events.Engine>(name: Key, handler: Events.Engine[Key]): void
+        config: Configuration
       }
 
       interface Shard {

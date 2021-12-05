@@ -3,7 +3,7 @@ export type Schema = {
   /**
    * The shard name.
    */
-  shard?: string,
+  shard: string,
 
   /**
    * Enabled mods.
@@ -13,11 +13,11 @@ export type Schema = {
   /**
    * Public API setting
    */
-  public?: {
+  public: {
     /**
      * Public API path
      */
-    path?: string
+    path: string
   },
   /**
    * Storage settings
