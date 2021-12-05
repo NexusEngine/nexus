@@ -1,20 +1,3 @@
-
-declare global {
-  type Provide = 'store'
-    | 'memory'
-    | 'stream'
-    | 'game'
-    | 'shard'
-    | 'launcher'
-    | 'processor'
-    | 'public'
-
-  interface Manifest {
-    provides: Provide | Provide[] | null,
-    paths?: Partial<Record<Provide, string>>
-  }
-}
-
 const loaded = new Set<string>()
 export const mods: {
   specifier: string,
