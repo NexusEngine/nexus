@@ -174,7 +174,13 @@ declare module 'mods' {
         registerIntentProcessor<Receiver extends typeof GameObject>(receiver: Receiver, intent: string, handler: (reciever: Receiver, context: IntentContext, ...args: any[]) => Promise<void>): void
       }
 
-      interface Store {
+      interface BaseProvider {
+        readonly connected: boolean,
+        connect(): Promise<this>,
+        disconnect(): Promise<void>,
+      }
+
+      interface Store extends BaseProvider {
         /**
          * Open a database. If no database name is given,
          * the default database is used.
@@ -231,7 +237,7 @@ declare module 'mods' {
         delete(id: Shape['_id']): Promise<boolean>
       }
 
-      interface Memory {
+      interface Memory extends BaseProvider {
         /**
          * Set `key` to `value`.
          * @param key The key
@@ -392,7 +398,7 @@ declare module 'mods' {
         srem(key: string, ...members: string[]): Promise<void>,
       }
 
-      interface Stream {
+      interface Stream extends BaseProvider {
         /**
          * Add an entry to the given stream.
          * @param key The stream key

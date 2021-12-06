@@ -2,18 +2,29 @@ import Redis from 'ioredis'
 
 export class MemoryRedis implements Nexus.Memory {
   #client: Redis.Redis
+  #connected = false
 
   constructor(path: string) {
     this.#client = new Redis(path, { lazyConnect: true })
   }
 
-  async connect(): Promise<MemoryRedis> {
-    await this.#client.connect()
+  get connected() {
+    return this.#connected
+  }
+
+  async connect(): Promise<this> {
+    if (!this.#connected) {
+      await this.#client.connect()
+      this.#connected = true
+    }
     return this
   }
 
   async disconnect(): Promise<void> {
-    this.#client.disconnect()
+    if (this.#connected) {
+      this.#client.disconnect()
+      this.#connected = false
+    }
   }
 
   async set(key: string, value: string) {

@@ -5,10 +5,30 @@ import { nanoid } from 'nanoid/async'
 import { generateUpdateFilter } from './patch'
 
 export class MongoStore implements Nexus.Store {
+  #connected = false
   #client: MongoClient
 
   constructor(path: string) {
     this.#client = new MongoClient(path)
+  }
+
+  get connected() {
+    return this.#connected
+  }
+
+  async connect() {
+    if (!this.#connected) {
+      await this.#client.connect()
+      this.#connected = true
+    }
+    return this
+  }
+
+  async disconnect() {
+    if (this.#connected) {
+      await this.#client.close()
+      this.#connected = false
+    }
   }
 
   db(dbName?: string): MongoDatabase {
