@@ -145,6 +145,11 @@ export default async function (root: string, options: Options) {
   if (project.git) {
     console.log('Initializing Git repository...')
     await initializeGit(dir)
+
+    if (!existsSync(resolve(dir, './gitignore'))) {
+      console.log('Writing .gitignore...')
+      writeFileSync(resolve(dir, './gitignore'), 'node_modules\ndist')
+    }
   }
 
   console.log(white('\nYour project has been initialized!'))
