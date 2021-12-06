@@ -26,10 +26,17 @@ declare module 'mods' {
       paths?: Partial<Record<Provide, string>>
     }
 
+    /**
+     * This interface represents the base game object
+     * data shape.
+     */
     interface BaseShape<Type = any> {
       _id: Type
     }
 
+    /**
+     * Engine configuration
+     */
     type Configuration = Record<string, any> & {
       shard: string,
       mods?: string[],
@@ -65,6 +72,9 @@ declare module 'mods' {
        * Contains all events the engine produces.
        */
       namespace Events {
+        /**
+         * Events produced by the engine instance.
+         */
         interface Engine {
           /**
            * Run after mod manifests have been imported
@@ -78,6 +88,9 @@ declare module 'mods' {
           postInitializer: () => void
         }
 
+        /**
+         * Events produced by the shard.
+         */
         interface Shard {
           /**
            * Run when the engine instance is first initialized.
@@ -96,6 +109,9 @@ declare module 'mods' {
           shutdown: (time: number) => void
         }
 
+        /**
+         * Events produced by the game
+         */
         interface Game {
           // TODO
         }
@@ -108,6 +124,10 @@ declare module 'mods' {
          * @param handler The event handler
          */
         register<Key extends keyof Events.Engine>(name: Key, handler: Events.Engine[Key]): void
+
+        /**
+         * Enginee configuration
+         */
         config: Configuration
       }
 
