@@ -56,6 +56,12 @@ declare module 'mods' {
       }
     }
 
+    /**
+     * Chain multiple intent checks together.
+     * @param checks The intent checks
+     */
+    function chainIntentChecks(...checks: (() => Promise<void>)[]): Promise<void>
+
     abstract class GameObject<Shape extends BaseShape> {
       constructor(data: Shape)
       constructor(dbName: string | null, collectionName: string, data: Shape)

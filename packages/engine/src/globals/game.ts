@@ -13,4 +13,10 @@ const game: Nexus.Game = {
   },
 }
 
+registerGlobal(async function chainIntentChecks(...checks: (() => Promise<void>)[]) {
+  for (const check of checks) {
+    await check()
+  }
+})
+
 registerGlobal('Game', game)
