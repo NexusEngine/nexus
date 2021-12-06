@@ -4,7 +4,7 @@ import type { default as JSONPatcherProxyType } from 'jsonpatcherproxy'
 import { JSONPatcherProxy } from 'jsonpatcherproxy'
 import { registerGlobal } from '../utility/global'
 
-abstract class GameObject<Shape extends BaseShape> {
+abstract class GameObject<Shape extends BaseShape> implements globalThis.GameObject<Shape> {
   readonly ['#dbName']: string | null
   readonly ['#collectionName']: string
   ['#data']: Shape
