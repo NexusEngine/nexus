@@ -44,10 +44,16 @@ if (config().mods?.length) {
   console.log('No enabled mods found. The engine is kind of useless without mods...')
 }
 
+// Import engine and shard providers
+await Promise.all([
+  importMods('engine'),
+  importMods('shard'),
+])
+
 // Run pre-initialization hooks
 hooks.makeIterated('preInitializer')()
 
-// Import storage providers early
+// Import storage providers
 await Promise.all([
   importMods('store'),
   importMods('memory'),
