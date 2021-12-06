@@ -1,4 +1,4 @@
-import { hooks } from '../game/symbols'
+import { hooks, Processors } from '../game/symbols'
 import { registerGlobal } from '../utility/global'
 
 const objectsMap = new Map<string, typeof GameObject>()
@@ -11,6 +11,11 @@ const game: Nexus.Game = {
     }
     objectsMap.set(name, target)
   },
+  registerIntentProcessor(receiver, intent, handler) {
+    // @ts-expect-error
+    const processors = receiver.prototype[Processors] = receiver.prototype[Processors] ?? {}
+    processors[intent] = handler
+  }
 }
 
 registerGlobal(async function chainIntentChecks(...checks: (() => Promise<void>)[]) {

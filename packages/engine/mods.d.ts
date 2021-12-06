@@ -56,6 +56,10 @@ declare module 'mods' {
       }
     }
 
+    export interface IntentContext {
+      userId?: string,
+    }
+
     /**
      * Chain multiple intent checks together.
      * @param checks The intent checks
@@ -160,6 +164,14 @@ declare module 'mods' {
          * @param name The name of the object
          */
         registerObject<Target extends typeof GameObject>(target: Target, name?: string): void
+
+        /**
+         * Register an intent processor.
+         * @param receiver The receiving object
+         * @param intent The intent name
+         * @param handler The intent processor handler
+         */
+        registerIntentProcessor<Receiver extends typeof GameObject>(receiver: Receiver, intent: string, handler: (reciever: Receiver, context: IntentContext, ...args: any[]) => Promise<void>): void
       }
 
       interface Store {
