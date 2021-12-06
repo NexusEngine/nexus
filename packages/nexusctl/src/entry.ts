@@ -30,4 +30,11 @@ program
     await (await import('./commands/connect.js')).default(url, options)
   })
 
+program
+  .command('mod <command>')
+  .description('manage mods')
+  .action(async () => {
+    await import('./commands/mod/index.js')
+  })
+
 program.parse(process.argv)

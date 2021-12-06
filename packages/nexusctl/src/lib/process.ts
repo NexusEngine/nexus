@@ -13,11 +13,11 @@ export async function getDistTags(): Promise<string[][]> {
 }
 
 /**
- * Run `npm install` in the current working directory.
+ * Run `npm install`.
  */
-export async function install() {
+export async function install(cwd = process.cwd()) {
   return new Promise<void>(resolve => {
-    const child = spawn('npm', ['install'], { shell: true })
+    const child = spawn('npm', ['install'], { shell: true, cwd })
     child.stdout!.pipe(process.stdout, { end: false })
     child.stderr!.pipe(process.stderr, { end: false })
     child.stdout!.once('close', resolve)
@@ -25,11 +25,11 @@ export async function install() {
 }
 
 /**
- * Initialize an empty Git repository in the current working directory.
+ * Initialize an empty Git repository.
  */
-export async function initializeGit() {
+export async function initializeGit(cwd = process.cwd()) {
   return new Promise<void>(resolve => {
-    const child = spawn('git', ['init', '-b', 'main'])
+    const child = spawn('git', ['init', '-b', 'main'], { cwd })
     child.stdout!.pipe(process.stdout, { end: false })
     child.stderr!.pipe(process.stderr, { end: false })
     child.stdout!.once('close', resolve)
