@@ -3,7 +3,7 @@ import { isAbsolute, resolve } from 'path'
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import { parse } from 'path'
 import Inquirer from 'inquirer'
-import { white } from 'picocolors'
+import pico from 'picocolors'
 import { checkPackage } from '../../lib/helpers.js'
 import { getDistTags, initializeGit, install } from '../../lib/process.js'
 
@@ -86,8 +86,8 @@ export default async function (root: string, options: Options) {
   ])
 
   if (!project.typescript) {
-    console.log(`\nYou are ${white('NOT')} using TypeScript.`)
-    console.log(`Some files are expected to be in a ${white('`dist`')} directory.`)
+    console.log(`\nYou are ${pico.white('NOT')} using TypeScript.`)
+    console.log(`Some files are expected to be in a ${pico.white('`dist`')} directory.`)
     console.log('See the documentation for more information.')
   }
 
@@ -167,6 +167,6 @@ export default async function (root: string, options: Options) {
     }
   }
 
-  console.log(white('\nYour project has been initialized!'))
+  console.log(pico.white('\nYour project has been initialized!'))
   console.log('To find out where to go from here, visit the documentation.')
 }
