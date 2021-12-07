@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.build.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "types": [
+      "@nexus-engine/engine"
+    ]
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

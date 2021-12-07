@@ -1,0 +1,41 @@
+{
+  "name": "@nexus-engine/mod-stream-redis",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./dist/index.js",
+  "author": "Art of Coding <nexus@artofcoding.nl> (https://artofcoding.nl)",
+  "contributors": [
+    "Michiel van der Velde <michiel@michielvdvelde.nl> (https://michielvdvelde.nl)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nexus-Engine/nexus.git",
+    "directory": "packages/mod-stream-redis"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rimraf -rf ./dist",
+    "compile": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "npm run build"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "dependencies": {
+    "ioredis": "^4.28.2",
+    "nanoid": "^3.1.30"
+  },
+  "peerDependencies": {
+    "@nexus-engine/engine": "*"
+  },
+  "description": "Redis stream provider for Nexus Engine",
+  "bugs": {
+    "url": "https://github.com/Nexus-Engine/nexus/issues"
+  },
+  "homepage": "https://github.com/Nexus-Engine/nexus#readme",
+  "keywords": [],
+  "devDependencies": {
+    "@types/ioredis": "^4.28.2"
+  }
+}
