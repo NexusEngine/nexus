@@ -73,6 +73,10 @@ declare module 'mods' {
     function chainIntentChecks(...checks: (() => Promise<void>)[]): Promise<void>
 
     abstract class GameObject<Shape extends BaseShape> {
+      readonly ['#dbName']: string | null
+      readonly ['#collectionName']: string
+      ['#data']: Shape
+
       constructor(data: Shape)
       constructor(dbName: string | null, collectionName: string, data: Shape)
       constructor(dbOrData: Shape | string | null, collectionName?: string, data?: Shape)
@@ -182,7 +186,16 @@ declare module 'mods' {
          * @param intent The intent name
          * @param handler The intent processor handler
          */
-        registerIntentProcessor<Receiver extends typeof GameObject>(receiver: Receiver, intent: string, handler: (reciever: Receiver, context: IntentContext, ...args: any[]) => Promise<void>): void
+        registerIntentProcessor<Receiver extends typeof GameObject>(receiver: Receiver, intent: string, processor: (reciever: InstanceType<Receiver>, context: IntentContext, ...args: any[]) => Promise<void>): void
+
+        /**
+         * Execute an intent on the game object.
+         * @param target The target game object
+         * @param intent The intent name
+         * @param context The intent context
+         * @param args The intent arguments
+         */
+        executeIntent<Target extends InstanceType<typeof GameObject>>(target: Target, intent: string, context: IntentContext, ...args: any[]): Promise<void>
       }
 
       interface BaseProvider {
