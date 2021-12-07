@@ -29,12 +29,7 @@ if (!Object.keys(services).includes(service)) {
 }
 
 // Import globals
-import './globals/memory'
-import './globals/store'
-import './globals/stream'
-import './globals/engine'
-import './globals/game'
-import './globals/shard'
+import './globals'
 import './game/object'
 
 // Load mods
@@ -69,6 +64,9 @@ await Promise.all([
   Memory.connect(),
   Stream.connect(),
 ])
+
+// Run pre-service hooks
+hooks.makeIterated('preService')()
 
 // Import the service
 await import(services[service])

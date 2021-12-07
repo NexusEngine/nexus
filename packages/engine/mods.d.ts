@@ -96,6 +96,11 @@ declare module 'mods' {
            * Run after storage providers are registered.
            */
           postInitializer: () => void
+
+          /**
+           * Run after storage providers have connected.
+           */
+          preService(): void
         }
 
         /**
