@@ -18,10 +18,9 @@ interface EngineAnswers {
   version: string,
   shard: string,
   storage: {
-    data: string,
-    keyval: string,
+    store: string,
+    memory: string,
     stream: string,
-    pubsub: string,
   }
 }
 
@@ -89,26 +88,20 @@ export default async function () {
       default: 'shard0',
     },
     {
-      name: 'storage.data',
+      name: 'storage.store',
       message: 'Path to persistent storage',
       suffix: ':',
       default: 'memory://memory',
     },
     {
-      name: 'storage.keyval',
-      message: 'Path to key-valye store',
+      name: 'storage.memory',
+      message: 'Path to memory store',
       suffix: ':',
       default: 'memory://memory',
     },
     {
       name: 'storage.stream',
       message: 'Path to stream store',
-      suffix: ':',
-      default: 'memory://memory',
-    },
-    {
-      name: 'storage.pubsub',
-      message: 'Path to publish-subscribe store',
       suffix: ':',
       default: 'memory://memory',
     }
@@ -154,29 +147,26 @@ export default async function () {
   const schema = {
     shard: engine.shard,
     storage: {
-      data: {
-        path: engine.storage.data,
+      store: {
+        path: engine.storage.store,
       },
-      keyval: {
-        path: engine.storage.keyval,
+      memory: {
+        path: engine.storage.memory,
       },
       stream: {
         path: engine.storage.stream,
-      },
-      pubsub: {
-        path: engine.storage.pubsub,
       },
     },
   }
 
   console.log('\nWriting package.json...')
-  writeFileSync('./package2.json', JSON.stringify(pkg, null, 2))
+  writeFileSync('./package.json', JSON.stringify(pkg, null, 2))
 
   console.log('\nInstalling dependencies...')
   await install()
 
-  console.log('\nWriting .engine.yaml...')
-  writeFileSync('./engine.yaml', dump(schema))
+  console.log('\nWriting .nexus.yml...')
+  writeFileSync('./nexus.yml', dump(schema))
 
   const { initGit } = await Inquirer.prompt<{ initGit: boolean }>({
     type: 'confirm',
@@ -190,7 +180,7 @@ export default async function () {
 
     if (!existsSync('./.gitignore')) {
       console.log('\nWriting .gitignore...')
-      writeFileSync('./.gitignore', 'node_modules\ndist\n.engine.yaml')
+      writeFileSync('./.gitignore', 'node_modules\ndist\n.nexus.yml')
     }
   }
 
