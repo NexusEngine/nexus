@@ -2,9 +2,11 @@ engine:
   - packages/engine/*
   - packages/engine/**/*
 
-config:
-  - packages/config/*
-  - packages/config/**/*
+docs:
+  - '*.md'
+  - docs
+  - packages/**/docs/*
+  - packages/**/docs/**/*
 
 cli:
   - packages/nexusctl/*
