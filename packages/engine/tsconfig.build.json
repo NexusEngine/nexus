@@ -5,6 +5,6 @@
   },
   "include": [
     "src/**/*",
-    "mods.d.ts"
+    "types/**/*"
   ]
 }

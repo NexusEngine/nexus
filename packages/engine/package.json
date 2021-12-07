@@ -6,7 +6,7 @@
   "contributors": [
     "Michiel van der Velde <michiel@michielvdvelde.nl> (https://michielvdvelde.nl)"
   ],
-  "types": "./mods.d.ts",
+  "types": "./types/mod/mod.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Nexus-Engine/nexus.git",
@@ -14,7 +14,7 @@
   },
   "files": [
     "dist",
-    "mods.d.ts"
+    "types"
   ],
   "scripts": {
     "build": "npm run clean && npm run compile",
