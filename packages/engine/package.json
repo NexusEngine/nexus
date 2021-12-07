@@ -2,6 +2,7 @@
   "name": "@nexus-engine/engine",
   "version": "0.1.0",
   "type": "module",
+  "description": "Nexus Engine is a next-generation multiplayer game engine back-end",
   "author": "Art of Coding <nexus@artofcoding.nl> (https://artofcoding.nl)",
   "contributors": [
     "Michiel van der Velde <michiel@michielvdvelde.nl> (https://michielvdvelde.nl)"
