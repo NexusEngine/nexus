@@ -64,9 +64,11 @@ await Promise.all([
 hooks.makeIterated('postInitializer')()
 
 // Connect to stores
-await Store.connect()
-await Memory.connect()
-await Stream.connect()
+await Promise.all([
+  Store.connect(),
+  Memory.connect(),
+  Stream.connect(),
+])
 
 // Import the service
 await import(services[service])
