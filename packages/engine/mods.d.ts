@@ -61,6 +61,11 @@ declare module 'mods' {
     }
 
     /**
+     * Generate a unique, secure alphanumeric string.
+     */
+    function generateId(): Promise<string>
+
+    /**
      * Chain multiple intent checks together.
      * @param checks The intent checks
      */
