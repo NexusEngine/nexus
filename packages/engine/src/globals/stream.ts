@@ -24,5 +24,5 @@ registerGlobal(registerStream)
 registerGlobal(buildStream)
 
 hooks.register('postInitializer', () => {
-  registerGlobal('Stream', buildStream(config().storage.store.path))
+  registerGlobal('Stream', buildStream(config().storage.stream.path))
 })

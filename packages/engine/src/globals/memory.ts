@@ -24,5 +24,5 @@ registerGlobal(registerMemory)
 registerGlobal(buildMemory)
 
 hooks.register('postInitializer', () => {
-  registerGlobal('Memory', buildMemory(config().storage.store.path))
+  registerGlobal('Memory', buildMemory(config().storage.memory.path))
 })
