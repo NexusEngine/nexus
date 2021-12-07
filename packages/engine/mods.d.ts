@@ -62,8 +62,9 @@ declare module 'mods' {
 
     /**
      * Generate a unique, secure alphanumeric string.
+     * @param size The length of the string (default 12)
      */
-    function generateId(): Promise<string>
+    function generateId(size?: number): Promise<string>
 
     /**
      * Chain multiple intent checks together.
