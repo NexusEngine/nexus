@@ -83,10 +83,10 @@ export class MongoCollection<Shape extends BaseShape> implements Nexus.Collectio
 
   async insert(data: Partial<Shape>) {
     const _id = await generateId()
-    return this.#client
+    return (await this.#client
       .db(this.dbName ?? undefined)
       .collection<Shape>(this.collectionName)
-      .insertOne({ _id, ...data } as any)
+      .insertOne({ _id, ...data } as any)).insertedId
   }
 
   async update(id: Shape['_id'], operations: Operation[]) {
