@@ -2,10 +2,10 @@ import { Server } from 'http'
 import Koa from 'koa'
 import Router from '@koa/router'
 
-interface Context { }
-interface State { }
+export interface Context { }
+export interface State { }
 
-interface HttpServer extends Server {
+export interface HttpServer extends Server {
   app: Koa<State, Context>
   router: Router<State, Context>
 }
@@ -16,6 +16,8 @@ export const server = new Server(app.callback()) as HttpServer
 
 server.app = app
 server.router = router
+
+await import('./middleware.js')
 
 app.use(router.routes())
 app.use(router.allowedMethods())
