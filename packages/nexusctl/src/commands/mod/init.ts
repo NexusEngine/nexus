@@ -93,6 +93,21 @@ export default async function (root: string, options: Options) {
 
   const preferredEngineVersion = distTags.find(tag => tag[0] === project.engine)![1]
 
+  console.log(`\nSelected engine version is v${preferredEngineVersion} (${project.engine})\n`)
+
+  const { correct } = await Inquirer.prompt<{ correct: boolean }>({
+    type: 'confirm',
+    name: 'correct',
+    message: 'Is this correct',
+    suffix: '?',
+    default: true,
+  })
+
+  if (!correct) {
+    console.log('Aborted')
+    return
+  }
+
   const pkg: PackageJson = {
     name: project.name,
     version: project.version,
