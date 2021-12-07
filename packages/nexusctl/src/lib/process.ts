@@ -15,9 +15,10 @@ export async function getDistTags(): Promise<string[][]> {
 /**
  * Run `npm install`.
  */
-export async function install(cwd = process.cwd()) {
+export async function install(cwd = process.cwd(), name?: string, flags?: string[]) {
   return new Promise<void>(resolve => {
-    const child = spawn('npm', ['install'], { shell: true, cwd })
+    const allFlags = ['install', ...(flags ?? []), ...(name ? [name] : [])]
+    const child = spawn('npm', allFlags, { shell: true, cwd })
     child.stdout!.pipe(process.stdout, { end: false })
     child.stderr!.pipe(process.stderr, { end: false })
     child.stdout!.once('close', resolve)

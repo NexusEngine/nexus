@@ -9,4 +9,11 @@ program
     await (await import('./init.js')).default(root, options)
   })
 
+program
+  .command('install [mod]')
+  .description('install a mod in the current project')
+  .action(async (name: string) => {
+    await (await import('./install.js')).default(name)
+  })
+
 program.parse(process.argv.slice(1))
