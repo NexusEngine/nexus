@@ -1,14 +1,17 @@
-# Nexus Connector
+# Nexus Engine Connector
 
-Provides remote REPL over TCP.
+Provides the following:
+
+- Remote REPL over TCP
+- HTTP management/admin interface
 
 ## Usage
 
 ```
-npm i @nexus-engine/mod-connector --strict-peer-deps
+npx nexusctl mod install @nexus-engine/mod-connector
 ```
 
-In your `.engine.yaml` file:
+In your `.nexus.yml` file:
 
 ```yaml
 mods:
@@ -23,4 +26,10 @@ connector:
   # Enable HTTP API
   http:
     path: http://localhost:3407
+```
+
+To connect to the REPL:
+
+```
+npx nexusctl connect tcp://localhost:3406
 ```

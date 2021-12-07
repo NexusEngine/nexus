@@ -5,7 +5,7 @@ A MongoDB store for [Nexus Engine](https://github.com/NexusEngine/nexus).
 ## Usage
 
 ```
-npm i @nexus-engine/mod-store-mongodb --strict-peer-deps
+npx nexusctl mod install @nexus-engine/mod-store-mongodb
 ```
 
 In your `.nexus.yml` file:
@@ -15,7 +15,8 @@ mods:
   # Enable the mod
   - '@nexus-engine/mod-store-mongodb'
 
-# Store settings
-store:
-  path: mongodb://localhost/db
+storage:
+  # Store settings
+  store:
+    path: mongodb://localhost/db
 ```

@@ -1,11 +1,11 @@
-# Nexus Engine Memory (Redis)
+# Nexus Engine Stream (Redis)
 
 A Redis store for [Nexus Engine](https://github.com/NexusEngine/nexus).
 
 ## Usage
 
 ```
-npm i @nexus-engine/mod-memory-redis --strict-peer-deps
+npx nexusctl mod install @nexus-engine/mod-stream-redis
 ```
 
 In your `.nexus.yml` file:
@@ -13,9 +13,10 @@ In your `.nexus.yml` file:
 ```yaml
 mods:
   # Enable the mod
-  - '@nexus-engine/mod-memory-redis'
+  - '@nexus-engine/mod-stream-redis'
 
-# Memory settings
-memory:
-  path: redis://localhost
+storage:
+  # Stream settings
+  stream:
+    path: redis://localhost
 ```
