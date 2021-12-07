@@ -1,7 +1,6 @@
 import type { Filter } from 'mongodb'
 import type { Operation } from 'fast-json-patch'
 import { MongoClient } from 'mongodb'
-import { nanoid } from 'nanoid/async'
 import { generateUpdateFilter } from './patch'
 
 export class MongoStore implements Nexus.Store {
@@ -83,7 +82,7 @@ export class MongoCollection<Shape extends BaseShape> implements Nexus.Collectio
   }
 
   async insert(data: Partial<Shape>) {
-    const _id = await nanoid()
+    const _id = await generateId()
     return this.#client
       .db(this.dbName ?? undefined)
       .collection<Shape>(this.collectionName)
