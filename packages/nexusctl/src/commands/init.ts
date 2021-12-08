@@ -184,7 +184,10 @@ export default async function ({ yes, overwrite }: Options) {
   writeFileSync('./package.json', JSON.stringify(pkg, null, 2))
 
   console.log('\nInstalling dependencies...')
-  await install()
+  if (await install() !== 0) {
+    console.log('Failed to install dependencies. Aborting.')
+    return
+  }
 
   console.log('\nWriting .nexus.yml...')
   writeFileSync('./nexus.yml', dump(schema))
@@ -197,7 +200,9 @@ export default async function ({ yes, overwrite }: Options) {
   })
 
   if (initGit) {
-    await initializeGit()
+    if (await initializeGit() !== 0) {
+      console.log('Failed to initialize Git repository')
+    }
 
     if (overwrite || !existsSync('./.gitignore')) {
       console.log('\nWriting .gitignore...')

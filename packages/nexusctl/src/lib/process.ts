@@ -15,13 +15,16 @@ export async function getDistTags(): Promise<string[][]> {
 /**
  * Run `npm install`.
  */
-export async function install(cwd = process.cwd(), name?: string, flags?: string[]) {
-  return new Promise<void>(resolve => {
-    const allFlags = ['install', ...(flags ?? []), ...(name ? [name] : [])]
+export async function install(): Promise<number>
+export async function install(cwd: string): Promise<number>
+export async function install(cwd: string, name: string, flags?: string[]): Promise<number>
+export async function install(cwd = process.cwd(), name?: string, flags: string[] = []) {
+  return new Promise<number>(resolve => {
+    const allFlags = ['install', ...(name ? [name] : []), ...flags]
     const child = spawn('npm', allFlags, { shell: true, cwd })
     child.stdout!.pipe(process.stdout, { end: false })
     child.stderr!.pipe(process.stderr, { end: false })
-    child.stdout!.once('close', resolve)
+    child.once('exit', () => resolve(child.exitCode!))
   })
 }
 
@@ -29,10 +32,10 @@ export async function install(cwd = process.cwd(), name?: string, flags?: string
  * Initialize an empty Git repository.
  */
 export async function initializeGit(cwd = process.cwd()) {
-  return new Promise<void>(resolve => {
+  return new Promise<number>(resolve => {
     const child = spawn('git', ['init', '-b', 'main'], { cwd })
     child.stdout!.pipe(process.stdout, { end: false })
     child.stderr!.pipe(process.stderr, { end: false })
-    child.stdout!.once('close', resolve)
+    child.once('exit', () => resolve(child.exitCode!))
   })
 }
