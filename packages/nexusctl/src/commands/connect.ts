@@ -1,17 +1,11 @@
 import { connect } from 'net'
 import Inquirer from 'inquirer'
 
-type Options = {
-  token?: string,
-}
-
 /**
  * Connect to the REPL server of the instance.
  * @param urlStr The URL to connect to
- * @param options Additional options
- * @param options.token Authentication token
  */
-export default async function (urlStr: string, options: Options = {}) {
+export default async function (urlStr: string) {
   const url = new URL(urlStr)
   const socket = connect({
     port: parseInt(url.port ?? '3406'),
@@ -32,27 +26,17 @@ export default async function (urlStr: string, options: Options = {}) {
       })
     }
 
-    if (options.token) {
-      socket.write(`TOKEN ${options.token}\r\n`)
+    try {
       const response = await waitForResponse()
       const str = response.toString('utf-8').trim()
       if (str !== 'OK') {
-        console.error(`Failed to authenticate to instance: ${str}`)
+        console.log(`Failed to connect to instance: ${str}`)
         return
       }
-    } else {
-      try {
-        const response = await waitForResponse()
-        const str = response.toString('utf-8').trim()
-        if (str !== 'OK') {
-          console.log(`Failed to connect to instance: ${str}`)
-          return
-        }
-      } catch (err: any) {
-        console.error(`Unexpected data from connector: ${err.message ?? err}`)
-        socket.end()
-        return
-      }
+    } catch (err: any) {
+      console.error(`Unexpected data from connector: ${err.message ?? err}`)
+      socket.end()
+      return
     }
 
     let run = true
