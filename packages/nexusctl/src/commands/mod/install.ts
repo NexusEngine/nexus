@@ -3,7 +3,11 @@ import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { load, dump } from 'js-yaml'
 import { install } from '../../lib/process.js'
 
-export default async function(name: string) {
+type Options = {
+  enable: boolean
+}
+
+export default async function(name: string, { enable }: Options) {
   if (!existsSync('./package.json')) {
     console.log('No package.json found. Aborting.')
     return
@@ -23,11 +27,13 @@ export default async function(name: string) {
   console.log(`Installing mod ${name}...`)
   await install(undefined, name, ['--save-peer', '--strict-peer-deps'])
 
-  console.log('Enabling mod...')
-  const content = readFileSync('./.nexus.yml', 'utf-8')
-  const config = load(content) as { mods?: string[] }
-  config.mods = [...(config.mods ?? []), name]
-  writeFileSync('./.nexus.yml', dump(config), 'utf-8')
+  if (enable) {
+    console.log('Enabling mod...')
+    const content = readFileSync('./.nexus.yml', 'utf-8')
+    const config = load(content) as { mods?: string[] }
+    config.mods = [...(config.mods ?? []), name]
+    writeFileSync('./.nexus.yml', dump(config), 'utf-8')
+  }
 
   console.log('\nThe mod has been installed and can now be used.')
 }

@@ -45,8 +45,9 @@ mod
 mod
   .command('install <mod>')
   .description('install a mod in the current project')
-  .action(async (name: string) => {
-    await (await import('./commands/mod/install.js')).default(name)
+  .option('-e, --enable', 'enable the mod as well', false)
+  .action(async (name: string, options) => {
+    await (await import('./commands/mod/install.js')).default(name, options)
   })
 
 program.addCommand(mod)
