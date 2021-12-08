@@ -31,7 +31,12 @@ export default async function(name: string, { enable }: Options) {
   }
 
   console.log(`Installing mod ${name}...`)
-  await install(process.cwd(), name, ['--save-peer', '--strict-peer-deps'])
+  const exitCode = await install(process.cwd(), name, ['--save-peer', '--strict-peer-deps'])
+
+  if (exitCode !== 0) {
+    console.log(`Failed to install mod ${name}. Aborting`)
+    return
+  }
 
   if (enable) {
     console.log('Enabling mod...')
