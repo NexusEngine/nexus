@@ -29,8 +29,8 @@ program
   .command('connect [url]')
   .description('connect to the instance repl')
   .option('-t, --token', 'authentication token')
-  .action(async (url = 'tcp://localhost:3406', options) => {
-    await (await import('./commands/connect.js')).default(url, options)
+  .action(async (url = 'tcp://localhost:3406') => {
+    await (await import('./commands/connect.js')).default(url)
   })
 
 mod
