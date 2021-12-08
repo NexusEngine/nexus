@@ -137,8 +137,12 @@ export default async function (root: string, options: Options) {
       declaration: true,
       sourceMap: true,
       strict: true,
-      types: ['@nexus-engine/engine']
-    }
+      allowSyntheticDefaultImports: true,
+      types: ['@nexus-engine/engine'],
+      outDir: 'dist',
+    },
+    include: ['src'],
+    exclude: ['node_modules']
   }
 
   if (!existsSync(dir)) {
