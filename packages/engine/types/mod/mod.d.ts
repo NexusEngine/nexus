@@ -60,6 +60,11 @@ declare module 'mods' {
       userId?: string,
     }
 
+    class IntentError extends Error {
+      readonly code: string
+      constructor(code: string, message?: string)
+    }
+
     /**
      * Generate a unique, secure alphanumeric string.
      * @param size The length of the string (default 12)
