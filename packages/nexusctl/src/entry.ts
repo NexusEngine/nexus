@@ -3,6 +3,7 @@ import type { Service } from './lib/execute'
 import { Command } from 'commander'
 
 const program = new Command
+const mod = new Command('mod').description('manage mods')
 
 program
   .name('nexusctl')
@@ -30,11 +31,19 @@ program
     await (await import('./commands/connect.js')).default(url, options)
   })
 
-program
-  .command('mod <command>')
-  .description('manage mods')
-  .action(async () => {
-    await import('./commands/mod/index.js')
+mod
+  .command('init [root]')
+  .description('initialize a new mod project')
+  .action(async (root = process.cwd(), options) => {
+    await (await import('./commands/mod/init.js')).default(root, options)
   })
 
+mod
+  .command('install <mod>')
+  .description('install a mod in the current project')
+  .action(async (name: string) => {
+    await (await import('./commands/mod/install.js')).default(name)
+  })
+
+program.addCommand(mod)
 program.parse(process.argv)
