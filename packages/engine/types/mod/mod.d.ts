@@ -67,7 +67,7 @@ declare module 'mods' {
 
     /**
      * Generate a unique, secure alphanumeric string.
-     * @param size The length of the string (default 12)
+     * @param size The length of the string (default 21)
      */
     function generateId(size?: number): Promise<string>
 

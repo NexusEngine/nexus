@@ -10,7 +10,7 @@ import './stream'
 
 // Register custom ID generator
 const alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUWVXYZ0987654321'
-registerGlobal(async function generateId(size = 12) {
+registerGlobal(async function generateId(size = 21) {
   return customAlphabet(alphabet, size)()
 })
 
