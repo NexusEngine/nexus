@@ -34,6 +34,8 @@ program
 mod
   .command('init [root]')
   .description('initialize a new mod project')
+  .option('-y, --yes', 'accept defaults', false)
+  .option('--overwrite', 'overwrite existing files', false)
   .action(async (root = process.cwd(), options) => {
     await (await import('./commands/mod/init.js')).default(root, options)
   })

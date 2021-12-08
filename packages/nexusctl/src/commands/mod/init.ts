@@ -7,7 +7,10 @@ import pico from 'picocolors'
 import { checkPackage } from '../../lib/helpers.js'
 import { getDistTags, initializeGit, install } from '../../lib/process.js'
 
-type Options = {}
+type Options = {
+  yes: boolean,
+  overwrite: boolean,
+}
 
 interface ProjectAnswers {
   name: string,
@@ -20,12 +23,14 @@ interface ProjectAnswers {
   git: boolean,
 }
 
-export default async function (root: string, options: Options) {
+
+export default async function (root: string, { yes, overwrite }: Options) {
   const dir = isAbsolute(root) ? root : resolve(process.cwd(), root)
+  const NAME = parse(dir).base
 
   console.log('\nThis wizard will walk you through setting up a new mod.\n')
 
-  if (await checkPackage(dir) === false) {
+  if (!overwrite && await checkPackage(dir) === false) {
     console.log('Aborted')
     return
   }
@@ -33,12 +38,21 @@ export default async function (root: string, options: Options) {
   console.log('\nWe will set up your project.\n')
 
   const distTags = await getDistTags()
-  const project = await Inquirer.prompt<ProjectAnswers>([
+  const project = yes ? {
+    name: NAME,
+    version: '1.0.0',
+    description: '',
+    keywords: 'nexus-mod',
+    repository: '',
+    engine: 'latest',
+    typescript: true,
+    git: true,
+  } : await Inquirer.prompt<ProjectAnswers>([
     {
       name: 'name',
       message: 'Project name',
       suffix: ':',
-      default: parse(dir).base,
+      default: NAME,
     },
     {
       name: 'version',
@@ -95,17 +109,19 @@ export default async function (root: string, options: Options) {
 
   console.log(`\nSelected engine version is v${preferredEngineVersion} (${project.engine})\n`)
 
-  const { correct } = await Inquirer.prompt<{ correct: boolean }>({
-    type: 'confirm',
-    name: 'correct',
-    message: 'Is this correct',
-    suffix: '?',
-    default: true,
-  })
+  if (!yes) {
+    const { correct } = await Inquirer.prompt<{ correct: boolean }>({
+      type: 'confirm',
+      name: 'correct',
+      message: 'Is this correct',
+      suffix: '?',
+      default: true,
+    })
 
-  if (!correct) {
-    console.log('Aborted')
-    return
+    if (!correct) {
+      console.log('Aborted')
+      return
+    }
   }
 
   const pkg: PackageJson = {
@@ -165,9 +181,9 @@ export default async function (root: string, options: Options) {
     console.log('Initializing Git repository...')
     await initializeGit(dir)
 
-    if (!existsSync(resolve(dir, './gitignore'))) {
+    if (overwrite || !existsSync(resolve(dir, './gitignore'))) {
       console.log('Writing .gitignore...')
-      writeFileSync(resolve(dir, './gitignore'), 'node_modules\ndist')
+      writeFileSync(resolve(dir, './gitignore'), 'node_modules\ndist\n.nexus.yml')
     }
   }
 
