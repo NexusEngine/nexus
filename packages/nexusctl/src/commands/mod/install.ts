@@ -31,7 +31,7 @@ export default async function(name: string, { enable }: Options) {
   }
 
   console.log(`Installing mod ${name}...`)
-  await install(undefined, name, ['--save-peer', '--strict-peer-deps'])
+  await install(process.cwd(), name, ['--save-peer', '--strict-peer-deps'])
 
   if (enable) {
     console.log('Enabling mod...')
