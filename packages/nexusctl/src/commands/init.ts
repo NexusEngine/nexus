@@ -6,6 +6,11 @@ import { dump } from 'js-yaml'
 import { getDistTags, initializeGit, install } from '../lib/process.js'
 import { checkPackage } from '../lib/helpers.js'
 
+type Options = {
+  yes: boolean,
+  overwrite: boolean,
+}
+
 interface ProjectAnswers {
   name: string,
   version: string,
@@ -29,17 +34,23 @@ const NAME = parse(process.cwd()).base
 /**
  * Initialize a new project in the current working directory.
  */
-export default async function () {
+export default async function ({ yes, overwrite }: Options) {
   console.log(`\nThis wizard will walk you though setting up a new project.\n`)
 
-  if (await checkPackage() === false) {
+  if (!overwrite && await checkPackage() === false) {
     console.log('Aborted')
     return
   }
 
   console.log('\nFirst we will set up your project.\n')
 
-  const project = await Inquirer.prompt<ProjectAnswers>([
+  const project = yes ? {
+    name: NAME,
+    version: '1.0.0',
+    description: '',
+    keywords: '',
+    repository: '',
+  } : await Inquirer.prompt<ProjectAnswers>([
     {
       name: 'name',
       message: 'Project name',
@@ -72,7 +83,15 @@ export default async function () {
   console.log('\nNext, we will set up the engine.\n')
 
   const distTags = await getDistTags()
-  const engine = await Inquirer.prompt<EngineAnswers>([
+  const engine = yes ? {
+    version: 'latest',
+    shard: 'shard0',
+    storage: {
+      store: 'memory://memory/game',
+      memory: 'memory://memory',
+      stream: 'memory://memory',
+    }
+  } : await Inquirer.prompt<EngineAnswers>([
     {
       type: 'list',
       name: 'version',
@@ -91,7 +110,7 @@ export default async function () {
       name: 'storage.store',
       message: 'Path to persistent storage',
       suffix: ':',
-      default: 'memory://memory',
+      default: 'memory://memory/game',
     },
     {
       name: 'storage.memory',
@@ -111,17 +130,19 @@ export default async function () {
 
   console.log(`\nSelected engine version is v${preferredEngineVersion} (${engine.version})\n`)
 
-  const { correct } = await Inquirer.prompt<{ correct: boolean }>({
-    type: 'confirm',
-    name: 'correct',
-    message: 'Is this correct',
-    suffix: '?',
-    default: true,
-  })
+  if (!yes) {
+    const { correct } = await Inquirer.prompt<{ correct: boolean }>({
+      type: 'confirm',
+      name: 'correct',
+      message: 'Is this correct',
+      suffix: '?',
+      default: true,
+    })
 
-  if (!correct) {
-    console.log('Aborted')
-    return
+    if (!correct) {
+      console.log('Aborted')
+      return
+    }
   }
 
   const pkg: PackageJson = {
@@ -168,7 +189,7 @@ export default async function () {
   console.log('\nWriting .nexus.yml...')
   writeFileSync('./nexus.yml', dump(schema))
 
-  const { initGit } = await Inquirer.prompt<{ initGit: boolean }>({
+  const { initGit } = yes ? { initGit: true } : await Inquirer.prompt<{ initGit: boolean }>({
     type: 'confirm',
     name: 'initGit',
     message: 'Would you like to initialize a Git repository',
@@ -178,7 +199,7 @@ export default async function () {
   if (initGit) {
     await initializeGit()
 
-    if (!existsSync('./.gitignore')) {
+    if (overwrite || !existsSync('./.gitignore')) {
       console.log('\nWriting .gitignore...')
       writeFileSync('./.gitignore', 'node_modules\ndist\n.nexus.yml')
     }

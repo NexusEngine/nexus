@@ -12,8 +12,10 @@ program
 program
   .command('init')
   .description('initialize a new project')
-  .action(async () => {
-    await (await import('./commands/init.js')).default()
+  .option('-y, --yes', 'accept defaults', false)
+  .option('--overwrite',  'overwrite existing files', false)
+  .action(async (options) => {
+    await (await import('./commands/init.js')).default(options)
   })
 
 program
