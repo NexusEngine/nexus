@@ -8,15 +8,21 @@ type Options = {
 }
 
 export default async function(name: string, { enable }: Options) {
-  if (!existsSync('./package.json')) {
-    console.log('No package.json found. Aborting.')
-    return
-  } else {
+  try {
     const pkg = JSON.parse(readFileSync('./package.json', 'utf-8')) as PackageJson
     if (!pkg.dependencies || !Object.keys(pkg.dependencies).includes('@nexus-engine/engine')) {
       console.log('The current working directory is not a Nexus Engine project. Aborting.')
       return
     }
+  } catch (err: any) {
+    if (err.code === 'ENOENT') {
+      console.log('No package.json found. Aborting')
+      return
+    } else if (err instanceof SyntaxError) {
+      console.log('Unable to parse package.json. Aborting')
+      return
+    }
+    throw err
   }
 
   if (!existsSync('./.nexus.yml')) {
