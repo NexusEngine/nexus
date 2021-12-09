@@ -7,7 +7,7 @@
   "contributors": [
     "Michiel van der Velde <michiel@michielvdvelde.nl> (https://michielvdvelde.nl)"
   ],
-  "types": "./types/mod/mod.d.ts",
+  "types": "./types/mod/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Nexus-Engine/nexus.git",
