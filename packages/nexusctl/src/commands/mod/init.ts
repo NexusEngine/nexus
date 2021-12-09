@@ -170,7 +170,9 @@ export default async function (root: string, { yes, overwrite }: Options) {
   writeFileSync(resolve(dir, './package.json'), JSON.stringify(pkg, null, 2))
 
   console.log('Installing dependencies...')
-  await install(dir)
+  if (await install(dir) !== 0) {
+    console.log(pico.red('\nFailed to install dependencies. You will have to resolve this error manually.\n'))
+  }
 
   if (project.typescript) {
     console.log('Writing tsconfig.json...')
