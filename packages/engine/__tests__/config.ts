@@ -1,7 +1,22 @@
-import { config } from '../dist/config/index.js'
+import { config } from '@nexus-engine/engine/dist/config/index.js'
 
-describe('test 1', () => {
-  test('should pass', () => {
-    config()
+const defaults = {
+  shard: 'shard0',
+  storage: {
+    store: {
+      path: 'memory://store',
+    },
+    memory: {
+      path: 'memory://memory',
+    },
+    stream: {
+      path: 'memory://stream',
+    },
+  }
+}
+
+describe('configuration', () => {
+  test('should load default configuration', () => {
+    expect(config()).toMatchObject(defaults)
   })
 })
