@@ -5,13 +5,18 @@ import { install } from '../../lib/process.js'
 
 type Options = {
   enable: boolean
+  force: boolean
 }
 
-export default async function(name: string, { enable }: Options) {
+export default async function(name: string, { enable, force }: Options) {
   try {
     const pkg = JSON.parse(readFileSync('./package.json', 'utf-8')) as PackageJson
-    if (!pkg.dependencies || !Object.keys(pkg.dependencies).includes('@nexus-engine/engine')) {
+    const deps = Object.keys(pkg.dependencies ?? {})
+    if (!deps.length || !deps.includes('@nexus-engine/engine')) {
       console.log('The current working directory is not a Nexus Engine project. Aborting.')
+      return
+    } else if (!force && deps.includes(name)) {
+      console.log('This mod is already installed. Aborting.')
       return
     }
   } catch (err: any) {
@@ -40,10 +45,14 @@ export default async function(name: string, { enable }: Options) {
 
   if (enable) {
     console.log('Enabling mod...')
-    const content = readFileSync('./.nexus.yml', 'utf-8')
-    const config = load(content) as { mods?: string[] }
-    config.mods = [...(config.mods ?? []), name]
-    writeFileSync('./.nexus.yml', dump(config), 'utf-8')
+    try {
+      const content = readFileSync('./.nexus.yml', 'utf-8')
+      const config = load(content) as { mods?: string[] }
+      config.mods = [...(config.mods ?? []), name]
+      writeFileSync('./.nexus.yml', dump(config), 'utf-8')
+    } catch (err) {
+      console.log(`Failed to enable the mod. You will have to enable it manually.`)
+    }
   }
 
   console.log('\nThe mod has been installed and can now be used.')
