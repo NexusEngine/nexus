@@ -1,3 +1,5 @@
+import { readFileSync } from 'fs'
+import { load } from 'js-yaml'
 import { config } from '@nexus-engine/engine/dist/config/index.js'
 
 const defaults = {
@@ -16,7 +18,15 @@ const defaults = {
 }
 
 describe('configuration', () => {
-  test('should load default configuration', () => {
-    expect(config()).toMatchObject(defaults)
+  // Actual config for when a local .nexus.yml file is present
+  let actualConfig: any
+  beforeAll(() => {
+    try {
+      actualConfig = load(readFileSync('.nexus.yml', 'utf-8'))
+    } catch (err) {}
+  })
+
+  test('should load the configuration file or defaults', () => {
+    expect(config()).toMatchObject(actualConfig ?? defaults)
   })
 })
