@@ -12,10 +12,11 @@ export default async function(name: string, { enable, force }: Options) {
   try {
     const pkg = JSON.parse(readFileSync('./package.json', 'utf-8')) as PackageJson
     const deps = Object.keys(pkg.dependencies ?? {})
+    const peerDeps = Object.keys(pkg.peerDependencies ?? {})
     if (!deps.length || !deps.includes('@nexus-engine/engine')) {
       console.log('The current working directory is not a Nexus Engine project. Aborting.')
       return
-    } else if (!force && deps.includes(name)) {
+    } else if (!force && (deps.includes(name) || peerDeps.includes(name))) {
       console.log('This mod is already installed. Aborting.')
       return
     }
