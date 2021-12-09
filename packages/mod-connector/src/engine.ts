@@ -16,7 +16,6 @@ if (enableRepl) {
       throw new TypeError(`Invalid protocol "${url.protocol}", only TCP is supported`)
     }
 
-    // await import('./repl/middleware.js')
     replServer.listen(parseInt(url?.port ?? '3046'), url?.hostname ?? 'localhost', () => {
       console.log(`Connector REPL listening on ${url ?? 'tcp://localhost:3406'}`)
     })
@@ -25,7 +24,7 @@ if (enableRepl) {
 
 // Register the HTTP server, if enabled
 if (enableHttp) {
-  Engine.register('postInitializer', () => {
+  Engine.register('postInitializer', async () => {
     const url = config.connector?.http?.path
       ? new URL(config.connector.http.path)
       : undefined
@@ -34,7 +33,7 @@ if (enableHttp) {
       throw new TypeError(`Invalid protocol "${url.protocol}", only HTTP is supported`)
     }
 
-    // await import('./http/middleware.js')
+    await import('./http/middleware.js')
     httpServer.listen(parseInt(url?.port ?? '3407'), url?.hostname ?? 'localhost', () => {
       console.log(`Connector HTTP listening on ${url ?? 'http://localhost:3407'}`)
     })

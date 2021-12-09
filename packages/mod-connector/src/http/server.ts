@@ -17,7 +17,5 @@ export const server = new Server(app.callback()) as HttpServer
 server.app = app
 server.router = router
 
-await import('./middleware.js')
-
 app.use(router.routes())
 app.use(router.allowedMethods())
