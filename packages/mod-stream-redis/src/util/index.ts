@@ -1,7 +1,7 @@
 
 export function array2object(arr: any[]) {
   const obj: any = {}
-  for (let i = 0; i < arr.length; i = i + 2) {
+  for (let i = 0; i < arr.length; i =+ 2) {
     obj[arr[i]] = arr[i + 1]
   }
   return obj
