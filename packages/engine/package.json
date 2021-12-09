@@ -7,7 +7,8 @@
   "contributors": [
     "Michiel van der Velde <michiel@michielvdvelde.nl> (https://michielvdvelde.nl)"
   ],
-  "types": "./types/mod/index.d.ts",
+  "main": "./dist/export.js",
+  "types": "./dist/export.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Nexus-Engine/nexus.git",
