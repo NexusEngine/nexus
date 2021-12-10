@@ -265,8 +265,6 @@ declare namespace Nexus {
      */
     srandmember(key: string, count?: number): Promise<string | string[] | undefined>,
 
-    spop(key: string): Promise<string | undefined>,
-    spop(key: string, count: number): Promise<string[] | undefined>,
     /**
      * Get one or up to `count` random members from the given set and remove them.
      * @param key The key of the set

@@ -111,7 +111,6 @@ export class MemoryRedis implements Nexus.Memory {
     }
   }
 
-  // @ts-expect-error
   async spop(key: string, count = 1) {
     if (count === 1) {
       return (await this.#client.spop(key, count))?.[0]
@@ -130,6 +129,5 @@ export class MemoryRedis implements Nexus.Memory {
 }
 
 Engine.register('preInitializer', () => {
-  // @ts-expect-error
   registerMemory('redis:', path => new MemoryRedis(path))
 })
