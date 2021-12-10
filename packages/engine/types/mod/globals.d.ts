@@ -8,7 +8,7 @@ declare namespace Nexus {
     register<Key extends keyof Events.Engine>(name: Key, handler: Events.Engine[Key]): void
 
     /**
-     * Enginee configuration
+     * Engine configuration
      */
     config: Configuration
   }

@@ -8,7 +8,10 @@ export class StreamRedis implements Nexus.Stream {
   #manager?: StreamsReader
 
   constructor(path: string) {
-    this.#client = new Redis(path, { lazyConnect: true })
+    this.#client = new Redis(path, {
+      lazyConnect: true,
+      keyPrefix: `${Engine.config.shard}:`,
+    })
   }
 
   get connected() {

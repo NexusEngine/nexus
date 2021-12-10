@@ -5,7 +5,10 @@ export class MemoryRedis implements Nexus.Memory {
   #connected = false
 
   constructor(path: string) {
-    this.#client = new Redis(path, { lazyConnect: true })
+    this.#client = new Redis(path, {
+      lazyConnect: true,
+      keyPrefix: `${Engine.config.shard}:`,
+    })
   }
 
   get connected() {
