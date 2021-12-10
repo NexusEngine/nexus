@@ -99,15 +99,8 @@ export class MemoryRedis implements Nexus.Memory {
     return this.#client.smembers(key)
   }
 
-  // @ts-expect-error
-  async sismember(key: string, ...members: string[]) {
-    if (members.length === 1) {
-      return await this.#client.sismember(key, members[0]) === 1
-    } else {
-      return Promise.all(members.map(async member => {
-        return await this.#client.sismember(key, member) === 1
-      }))
-    }
+  async sismember(key: string, member: string) {
+    return await this.#client.sismember(key, member) === 1
   }
 
   // @ts-expect-error

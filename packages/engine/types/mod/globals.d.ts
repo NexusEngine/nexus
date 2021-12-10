@@ -255,7 +255,7 @@ declare namespace Nexus {
      * @param members The members to check
      * @returns Whether or not the members are members of the given set
      */
-    sismember(key: string, ...members: string[]): Promise<boolean[]>,
+    sismember(key: string, member: string): Promise<boolean>,
 
     srandmember(key: string): Promise<string | undefined>,
     srandmember(key: string, count: number): Promise<string[] | undefined>,
