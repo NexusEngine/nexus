@@ -8,7 +8,7 @@ export const server = new Server(socket => {
     prompt: '',
     input: socket,
     output: socket,
-    terminal: false,
+    terminal: true,
     useColors: true,
     useGlobal: true,
     ignoreUndefined: false,
