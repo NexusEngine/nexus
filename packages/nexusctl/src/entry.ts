@@ -1,13 +1,17 @@
-import type { Options } from './commands/start'
-import type { Service } from './lib/execute'
+import type { PackageJson } from 'type-fest'
+import { readFileSync } from 'fs'
 import { Command } from 'commander'
+
+// Load package.json just to get the name and version
+const url = new URL('../package.json', import.meta.url)
+const pkg = JSON.parse(readFileSync(url, 'utf-8')) as PackageJson
 
 const program = new Command
 const mod = new Command('mod').description('manage mods')
 
 program
-  .name('nexusctl')
-  .version('0.1.0', '-v, --version')
+  .name(pkg.name!)
+  .version(pkg.version!)
 
 program
   .command('init')
@@ -21,7 +25,7 @@ program
 program
   .command('start [service]')
   .description('start the service')
-  .action(async (service: Service = 'launcher', options: Options) => {
+  .action(async (service = 'launcher', options) => {
     await (await import('./commands/start.js')).default(service, options)
   })
 
@@ -43,9 +47,10 @@ mod
 
 mod
   .command('install <mod>')
+  .alias('i')
   .description('install a mod in the current project')
   .option('-e, --enable', 'enable the mod', false)
-  .option('-f, --force', 'force reinstall', false)
+  .option('-f, --force', 'force install', false)
   .action(async (name: string, options) => {
     await (await import('./commands/mod/install.js')).default(name, options)
   })
