@@ -1,4 +1,4 @@
-import { customAlphabet } from 'nanoid/async'
+import { nanoid } from 'nanoid/async'
 import { registerGlobal } from '../utility/global'
 
 import './engine'
@@ -8,10 +8,9 @@ import './store'
 import './memory'
 import './stream'
 
-// Register custom ID generator
-const alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUWVXYZ0987654321'
+// Register ID generator
 registerGlobal(async function generateId(size = 21) {
-  return customAlphabet(alphabet, size)()
+  return nanoid(size)
 })
 
 // Register intent error
