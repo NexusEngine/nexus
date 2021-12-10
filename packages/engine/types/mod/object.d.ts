@@ -7,6 +7,7 @@ declare abstract class GameObject<Shape extends BaseShape> {
   readonly ['#dbName']: string | null
   readonly ['#collectionName']: string
   ['#data']: Shape
+  [Processors]?: Record<string, (...args: any[]) => Promise<void>>
 
   constructor(data: Shape)
   constructor(dbName: string | null, collectionName: string, data: Shape)

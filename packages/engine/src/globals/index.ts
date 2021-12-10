@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid/async'
 import { registerGlobal } from '../utility/global'
+import { Processors } from '../game/symbols'
 
 import './engine'
 import './shard'
@@ -7,6 +8,8 @@ import './game'
 import './store'
 import './memory'
 import './stream'
+
+registerGlobal('Processors', Processors)
 
 // Register ID generator
 registerGlobal(async function generateId(size = 21) {

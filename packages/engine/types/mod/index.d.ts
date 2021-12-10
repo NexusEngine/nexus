@@ -89,3 +89,5 @@ declare class IntentError extends Error {
    */
   constructor(code: string, message?: string)
 }
+
+declare const Processors: unique symbol
