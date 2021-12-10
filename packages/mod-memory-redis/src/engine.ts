@@ -103,7 +103,6 @@ export class MemoryRedis implements Nexus.Memory {
     return await this.#client.sismember(key, member) === 1
   }
 
-  // @ts-expect-error
   async srandmember(key: string, count = 1) {
     if (count === 1) {
       return (await this.#client.srandmember(key, count))?.[0]

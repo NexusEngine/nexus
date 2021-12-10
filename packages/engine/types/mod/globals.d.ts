@@ -257,8 +257,6 @@ declare namespace Nexus {
      */
     sismember(key: string, member: string): Promise<boolean>,
 
-    srandmember(key: string): Promise<string | undefined>,
-    srandmember(key: string, count: number): Promise<string[] | undefined>,
     /**
      * Get one or up to `count` number of random members from the given set.
      * @param key The key of the set
