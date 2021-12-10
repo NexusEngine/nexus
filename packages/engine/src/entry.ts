@@ -24,7 +24,7 @@ const services: Record<string, string> = {
 
 const service = process.argv[2]
 if (!Object.keys(services).includes(service)) {
-  console.log(`Unknown service "${service}". Supported services are: ${Object.keys(services).join(', ')}`)
+  console.log(`Unknown service "${service}".\nSupported services are: ${Object.keys(services).join(', ')}`)
   process.exit(3)
 }
 
@@ -33,10 +33,13 @@ import './globals'
 import './game/object'
 
 // Load mods
-if (config().mods?.length) {
-  await loadMods(...config().mods!)
+const mods = config().mods ?? []
+if (!mods.length) {
+  console.log('No enabled mods found. The engine cannot function without mods.')
+  console.log('To learn how to install and enable a mod, visit the documentation.')
+  process.exit(12)
 } else {
-  console.log('No enabled mods found. The engine is kind of useless without mods...')
+  await loadMods(...mods)
 }
 
 // Import engine and shard providers

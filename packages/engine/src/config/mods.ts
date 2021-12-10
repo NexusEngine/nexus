@@ -15,11 +15,11 @@ export async function loadMods(...specifiers: string[]) {
       loaded.add(specifier)
     } catch (err: any) {
       if (err.code === 'ERR_MODULE_NOT_FOUND') {
-        console.log(`Failed to load mod "${specifier}". Continuing without.`)
-        console.error(err)
+        console.log(`Failed to resolve mod "${specifier}". Continuing without.`)
       } else {
-        throw err
+        console.log(`Failed to load mod "${specifier}". Continuing without.`)
       }
+      console.error(err)
     }
   }
 }
@@ -32,8 +32,11 @@ export async function importMods(provide: Provide) {
         await import(`${specifier}${path}`)
       } catch (err: any) {
         if (err.code === 'ERR_MODULE_NOT_FOUND') {
-          console.log(`Failed to import mod "${specifier}${path}". Continuing without.`)
+          console.log(`Failed to resolve provider "${specifier}${path}". Continuing without.`)
+        } else {
+          console.log(`Failed to import provider "${specifier}${path}". Continuing without.`)
         }
+        console.error(err)
       }
     }
   }
