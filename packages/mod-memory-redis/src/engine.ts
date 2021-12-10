@@ -55,6 +55,14 @@ export class MemoryRedis implements Nexus.Memory {
     return this.#client.decrby(key, increment)
   }
 
+  async expire(key: string, seconds: number) {
+    return await this.#client.expire(key, seconds) === 1
+  }
+
+  async expireat(key: string, timestamp: number) {
+    return await this.#client.expireat(key, timestamp) === 1
+  }
+
   async hexists(key: string, field: string) {
     return await this.#client.hexists(key, field) === 1
   }

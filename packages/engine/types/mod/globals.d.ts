@@ -170,6 +170,21 @@ declare namespace Nexus {
     decrBy(key: string, decrement: number): Promise<number>,
 
     /**
+     * Expire the given key after `seconds` seconds.
+     * @param key The key to expire
+     * @param seconds The number of seconds after which to expire the key
+     * @returns `true` if the timeout was set, `false` otherwise
+     */
+    expire(key: string, seconds: number): Promise<boolean>,
+
+    /**
+     * Expire the given key at the given time.
+     * @param key The key to expire
+     * @param timestamp The Unix timestamp to expire the key at
+     */
+    expireat(key: string, timestamp: number): Promise<boolean>,
+
+    /**
      * Check if the given hash contains the given field.
      * @param key The key of the hash
      * @param field The field to check
