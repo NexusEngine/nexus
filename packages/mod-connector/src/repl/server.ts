@@ -1,5 +1,5 @@
 import { Server } from 'net'
-import { start } from 'repl'
+import { start, REPL_MODE_STRICT } from 'repl'
 
 export const server = new Server(socket => {
   socket.write('OK\n')
@@ -12,5 +12,7 @@ export const server = new Server(socket => {
     useColors: true,
     useGlobal: true,
     ignoreUndefined: false,
+    replMode: REPL_MODE_STRICT,
+    breakEvalOnSigint: true,
   })
 })
