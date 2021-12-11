@@ -11,11 +11,6 @@ declare namespace Nexus {
      * Engine configuration
      */
     config: Configuration
-
-    /**
-     * Logger
-     */
-    log: Logger
   }
 
   interface Shard {
