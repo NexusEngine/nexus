@@ -8,7 +8,6 @@ import { createWriteStream } from 'fs'
  */
 export class FileSystemLogger extends Writable implements Logger {
   readonly outFile: string
-  #lastOutput?: number
   #outStream?: ReturnType<typeof createWriteStream>
 
   constructor(outFile: string) {
