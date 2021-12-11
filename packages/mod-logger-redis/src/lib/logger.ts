@@ -1,26 +1,29 @@
+import type { JsonValue } from 'type-fest'
 import { Writable } from 'stream'
 import Redis from 'ioredis'
 
 export class RedisLogger extends Writable implements Logger {
   #client: Redis.Redis
-  constructor(readonly url: string) {
-    super()
+  constructor(readonly url: string, readonly key = 'log') {
+    super({ objectMode: true })
     this.#client = new Redis(url, {
       lazyConnect: true,
-      keyPrefix: `${Engine.config.shard}`,
+      keyPrefix: `${Engine.config.shard}:`,
     })
   }
 
-  log(message: string): void {
-    this.write(message)
+  log(...args: JsonValue[]): void {
+    this.write(args)
   }
 
-  warn(message: string): void {
-    this.write(`(WARN) ${message}`)
+  warn(...args: JsonValue[]): void {
+    args.unshift('WARN')
+    this.write(args)
   }
 
-  error(message: string): void {
-    this.write(`(ERR) ${message}`)
+  error(...args: JsonValue[]): void {
+    args.unshift('ERR')
+    this.write(args)
   }
 
   async close() {
@@ -28,7 +31,11 @@ export class RedisLogger extends Writable implements Logger {
   }
 
   _construct(done: (error?: Error | null) => void) {
-    this.#client.connect(done)
+    try {
+      this.#client.connect(done)
+    } catch (err: any) {
+      done(err)
+    }
   }
 
   _destroy(_error: Error | null, callback: (error?: Error | null) => void): void {
@@ -36,11 +43,9 @@ export class RedisLogger extends Writable implements Logger {
     callback()
   }
 
-  _write(chunk: any, _encoding: BufferEncoding, callback: (error?: Error | null) => void): void {
-    this.#client.xadd('log', '*', 'message', Buffer.isBuffer(chunk) ? chunk.toString('utf-8') : chunk as string).finally(callback)
-  }
-
-  transform(str: string): string {
-    return `[${new Date().toLocaleString()}]: ${str}`
+  _write(args: any[], _encoding: BufferEncoding, callback: (error?: Error | null) => void): void {
+    this.#client.xadd(this.key, '*', ...args)
+      .then(() => callback())
+      .catch(err => callback(err))
   }
 }

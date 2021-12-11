@@ -1,3 +1,4 @@
+import type { JsonValue } from 'type-fest'
 import { Writable } from 'stream'
 import { createWriteStream } from 'fs'
 
@@ -11,29 +12,22 @@ export class FileSystemLogger extends Writable implements Logger {
   #outStream?: ReturnType<typeof createWriteStream>
 
   constructor(outFile: string) {
-    super()
+    super({ objectMode: true })
     this.outFile = outFile
   }
 
-  log(message: string, out = true): void {
-    this.write(`(LOG) ${message}`)
-    if (out) {
-      console.log(message)
-    }
+  log(...args: JsonValue[]): void {
+    this.write(args)
   }
 
-  warn(message: string, out = true): void {
-    this.write(`(WARN) ${message}`)
-    if (out) {
-      console.warn(message)
-    }
+  warn(...args: JsonValue[]): void {
+    args.unshift('WARN')
+    this.write(args)
   }
 
-  error(message: string, out = true): void {
-    this.write(`(ERR) ${message}`)
-    if (out) {
-      console.error(message)
-    }
+  error(...args: JsonValue[]): void {
+    args.unshift('ERR')
+    this.write(args)
   }
 
   async close() {
@@ -58,19 +52,12 @@ export class FileSystemLogger extends Writable implements Logger {
     }
   }
 
-  _write(chunk: any, _encoding: BufferEncoding, done: (error?: Error | null) => void): void {
-    const str = Buffer.isBuffer(chunk) ? chunk.toString('utf-8') : chunk
-    const line = this.transform(str)
-    this.#outStream!.write(line, done)
+  _write(chunk: JsonValue[], _encoding: BufferEncoding, done: (error?: Error | null) => void): void {
+    chunk.unshift(new Date().toISOString())
+    this.#outStream!.write(`${JSON.stringify(chunk)}\n`, done)
   }
 
   _destroy(_error: Error | null, done: (error?: Error | null) => void): void {
     this.#outStream!.end(done)
-  }
-
-  transform(str: string): string {
-    const delta = Date.now() - (this.#lastOutput ?? Date.now())
-    this.#lastOutput = Date.now()
-    return `[${new Date().toLocaleString()}]: ${str} (+${delta}ms)\n`
   }
 }
