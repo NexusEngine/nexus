@@ -67,26 +67,3 @@ declare type Configuration = Record<string, any> & {
     }
   }
 }
-
-/**
- * Represents the context for an intent.
- * This object is passed as the first argument to game object intents.
- */
-declare interface IntentContext {
-  userId?: string,
-}
-
-/**
- * Represents a failed intent check.
- */
-declare class IntentError extends Error {
-  readonly code: string
-  /**
-   * Create a new intent error with the given error code and message.
-   * @param code The error code, for programmatic use
-   * @param message Optional error message
-   */
-  constructor(code: string, message?: string)
-}
-
-declare const Processors: unique symbol
