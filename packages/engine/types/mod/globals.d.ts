@@ -34,30 +34,6 @@ declare namespace Nexus {
      * @param handler The event handler
      */
     register<Key extends keyof Events.Game>(name: Key, handler: Events.Game[Key]): void
-
-    /**
-     * Register an object with the game instance.
-     * @param target The target constructor to register
-     * @param name The name of the object
-     */
-    registerObject<Target extends typeof GameObject>(target: Target, name?: string): void
-
-    /**
-     * Register an intent processor.
-     * @param receiver The receiving object
-     * @param intent The intent name
-     * @param handler The intent processor handler
-     */
-    registerIntentProcessor<Receiver extends typeof GameObject>(receiver: Receiver, intent: string, processor: (reciever: InstanceType<Receiver>, context: IntentContext, ...args: any[]) => Promise<void>): void
-
-    /**
-     * Execute an intent on the game object.
-     * @param target The target game object
-     * @param intent The intent name
-     * @param context The intent context
-     * @param args The intent arguments
-     */
-    executeIntent<Target extends InstanceType<typeof GameObject>>(target: Target, intent: string, context: IntentContext, ...args: any[]): Promise<void>
   }
 
   interface BaseProvider {

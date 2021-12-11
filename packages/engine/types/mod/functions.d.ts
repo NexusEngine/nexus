@@ -7,9 +7,3 @@
  * @returns A unique ID
  */
 declare function generateId(size?: number): Promise<string>
-
-/**
- * Chain multiple intent checks together.
- * @param checks The intent checks
- */
-declare function chainIntentChecks(...checks: (() => Promise<void>)[]): Promise<void>

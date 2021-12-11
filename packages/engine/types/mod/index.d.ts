@@ -1,6 +1,5 @@
 /// <reference path="globals.d.ts" />
 /// <reference path="manifest.d.ts" />
-/// <reference path="object.d.ts" />
 /// <reference path="events.d.ts" />
 /// <reference path="functions.d.ts" />
 /// <reference path="logger.d.ts" />
