@@ -1,7 +1,11 @@
 import { Writable } from 'stream'
 import { createWriteStream } from 'fs'
 
-export class Logger extends Writable {
+/**
+ * A simple file system logger.
+ * Logs to a file on the file system.
+ */
+export class FileSystemLogger extends Writable implements Logger {
   readonly outFile: string
   #lastOutput?: number
   #outStream?: ReturnType<typeof createWriteStream>
@@ -29,6 +33,19 @@ export class Logger extends Writable {
     this.write(`(ERR) ${message}`)
     if (out) {
       console.error(message)
+    }
+  }
+
+  async close() {
+    if (this.#outStream) {
+      await new Promise<void>(resolve => {
+        this.#outStream!.end(() => {
+          this.#outStream = undefined
+          resolve()
+        })
+      })
+
+      await new Promise<void>(resolve => this.end(resolve))
     }
   }
 

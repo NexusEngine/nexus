@@ -3,6 +3,7 @@
 /// <reference path="object.d.ts" />
 /// <reference path="events.d.ts" />
 /// <reference path="functions.d.ts" />
+/// <reference path="logger.d.ts" />
 
 /**
  * This interface represents the base game object
@@ -91,43 +92,3 @@ declare class IntentError extends Error {
 }
 
 declare const Processors: unique symbol
-
-/**
- * Represents a logger instance which logs to a file on the file system.
- */
-declare class Logger {
-  /**
-   * Log a message to the log file.
-   * @param message The message to log
-   * @param out Whether to log the message to the console as well (default true)
-   */
-  log(message: string, out?: boolean): void
-
-  /**
-   * Log a warning message to the log file.
-   * @param message The message to log
-   * @param out Whether to log the message to the console as well (default true)
-   */
-  warn(message: string, out?: boolean): void
-
-  /**
-   * Log an error message to the log file.
-   * @param message The message to log
-   * @param out Whether to log the message to the console as well (default true)
-   */
-  error(message: string, out?: boolean): void
-
-  /**
-   * Write a message to the log file.
-   * @param message The message to log
-   * @param out Whether to log the message to the console as well (default true)
-   */
-  write(message: string): void
-
-  /**
-   * Transform the passed in message to the
-   * message that will be written to the log file.
-   * @param str The string to transform
-   */
-  transform(str: string): string
-}
