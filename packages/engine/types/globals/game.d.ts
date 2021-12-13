@@ -10,6 +10,12 @@ declare global {
        * @param handler The event handler
        */
       register<Key extends keyof Events.Game>(name: Key, handler: Events.Game[Key]): void
+
+      /**
+       * Register a game object with the game.
+       * @param target The target object to register
+       */
+      registerObject<Target extends typeof GameObject>(target: Target): void
     }
   }
 
@@ -32,4 +38,38 @@ declare global {
    * @param config Intent configuration
    */
   function intent<Payload extends JsonObject>(config: IntentConfig<Payload>): PropertyDecorator
+
+  /**
+   * The base game object class.
+   * Almost anything can be a game object.
+   * Game objects are persisted to the database.
+   */
+  abstract class GameObject<Shape extends BaseShape> {
+    constructor(data: Shape)
+
+    /**
+     * Underlaying data shape.
+     */
+    '#data': Shape
+
+    /**
+     * The ID of the game object.
+     */
+    get id(): Shape['_id']
+
+    /**
+     * Flush pending patches to the database.
+     */
+    flush(): Promise<void>
+
+    /**
+     * Revoke the shape observer proxy.
+     */
+    revoke(): void
+
+    /**
+     * Flush pending patches and revoke the shape observer proxy.
+     */
+    flushAndRevoke(): Promise<void>
+  }
 }

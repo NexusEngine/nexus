@@ -30,7 +30,7 @@ if (!Object.keys(services).includes(service)) {
 
 // Import globals
 import './globals'
-import './game/intent'
+import './game/globals'
 
 // Load mods
 const mods = config().mods ?? []
