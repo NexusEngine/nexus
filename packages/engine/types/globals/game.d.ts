@@ -29,15 +29,21 @@ declare global {
     schema: JSONSchemaType<Payload>
   }
 
-  interface IntentContext<Payload extends JsonObject> {
+  interface IntentContext<Payload> {
     payload: Payload,
+  }
+
+  interface Intent {
+    target: string,
+    op: string,
+    payload: JsonObject,
   }
 
   /**
    * Registers the method as an intent and provides payload validation.
    * @param config Intent configuration
    */
-  function intent<Payload extends JsonObject>(config: IntentConfig<Payload>): PropertyDecorator
+  function intent<Payload>(config: IntentConfig<Payload>): PropertyDecorator
 
   /**
    * The base game object class.

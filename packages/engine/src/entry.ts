@@ -1,3 +1,4 @@
+import type { JsonObject } from 'type-fest'
 import { config } from './config/index.js'
 import { loadMods, importMods } from './config/mods.js'
 import { hooks } from './engine/symbols.js'

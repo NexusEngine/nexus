@@ -1,8 +1,5 @@
-import { hooks } from '../game/symbols'
+import { hooks, objectsMap } from '../game/symbols'
 import { registerGlobal } from '../utility/global'
-
-// NOTE: move to a more logical place
-export const objectsMap = new Map<string, typeof GameObject>()
 
 const game: Nexus.Game = {
   register: hooks.register,

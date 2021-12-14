@@ -3,8 +3,10 @@ import type { default as JSONPatcherProxyType } from 'jsonpatcherproxy'
 // @ts-ignore
 import { JSONPatcherProxy } from 'jsonpatcherproxy'
 import { registerGlobal } from '../utility/global'
+import { Intents } from './symbols'
 
 abstract class GameObject<Shape extends BaseShape> implements globalThis.GameObject<Shape> {
+  [Intents]: {}
   #proxy: JSONPatcherProxyType<Shape>
   '#data': Shape
 
