@@ -25,7 +25,7 @@ function intent<Payload extends JsonObject>(config: IntentConfig<Payload>) {
 
 registerGlobal(intent)
 
-async function intentProcessor(intent: Intent) {
+export async function intentProcessor(intent: Intent) {
   const [ name, id ] = intent.target.split(':')
   const Target = objectsMap.get(name)
   if (!Target) {
@@ -46,5 +46,3 @@ async function intentProcessor(intent: Intent) {
 
   return target[intent.op](ctx)
 }
-
-registerGlobal(intentProcessor)
