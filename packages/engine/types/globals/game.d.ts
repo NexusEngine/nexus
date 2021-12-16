@@ -54,7 +54,17 @@ declare global {
     static readonly dbName?: string
     static readonly collectionName?: string
 
-    constructor(data: Shape)
+    /**
+     * Create a new instance, optionally observing changes on the data shape.
+     * @param data The object data shape
+     * @param observe Whether or not to observe changes on the data shape
+     */
+    constructor(data: Shape, observe?: boolean)
+
+    /**
+     * Whether or not the data shape is being observed.
+     */
+    observing: boolean
 
     /**
      * Underlaying data shape.

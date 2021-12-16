@@ -10,12 +10,21 @@ abstract class GameObject<Shape extends BaseShape> implements globalThis.GameObj
   static readonly collectionName?: string
 
   [Intents]: {}
-  #proxy: JSONPatcherProxyType<Shape>
+  #proxy: JSONPatcherProxyType<Shape> | null
   '#data': Shape
 
-  constructor(data: Shape) {
-    this.#proxy = new JSONPatcherProxy(data)
-    this['#data'] = this.#proxy.observe(true) as Shape
+  constructor(data: Shape, observe = true) {
+    if (observe) {
+      this.#proxy = new JSONPatcherProxy(data)
+      this['#data'] = this.#proxy!.observe(true) as Shape
+    } else {
+      this.#proxy = null
+      this['#data'] = data
+    }
+  }
+
+  get observing() {
+    return !!this.#proxy
   }
 
   get id() {
@@ -23,6 +32,9 @@ abstract class GameObject<Shape extends BaseShape> implements globalThis.GameObj
   }
 
   async flush() {
+    if (!this.#proxy) {
+      return
+    }
     const patches = this.#proxy.generate()
     if (patches.length) {
       await Store
@@ -33,7 +45,8 @@ abstract class GameObject<Shape extends BaseShape> implements globalThis.GameObj
   }
 
   revoke() {
-    this.#proxy.revoke()
+    this.#proxy?.revoke()
+    this.#proxy = null
   }
 
   async flushAndRevoke() {
