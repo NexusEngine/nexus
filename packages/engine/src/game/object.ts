@@ -6,6 +6,9 @@ import { registerGlobal } from '../utility/global'
 import { Intents } from './symbols'
 
 abstract class GameObject<Shape extends BaseShape> implements globalThis.GameObject<Shape> {
+  static readonly dbName?: string
+  static readonly collectionName?: string
+
   [Intents]: {}
   #proxy: JSONPatcherProxyType<Shape>
   '#data': Shape
@@ -23,8 +26,8 @@ abstract class GameObject<Shape extends BaseShape> implements globalThis.GameObj
     const patches = this.#proxy.generate()
     if (patches.length) {
       await Store
-        .db()
-        .collection<Shape>('objects')
+        .db((this.constructor as typeof GameObject).dbName)
+        .collection<Shape>((this.constructor as typeof GameObject).collectionName ?? 'objects')
         .update(this['#data']._id, patches)
     }
   }

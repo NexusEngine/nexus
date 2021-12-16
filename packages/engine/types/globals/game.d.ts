@@ -51,6 +51,9 @@ declare global {
    * Game objects are persisted to the database.
    */
   abstract class GameObject<Shape extends BaseShape> {
+    static readonly dbName?: string
+    static readonly collectionName?: string
+
     constructor(data: Shape)
 
     /**
